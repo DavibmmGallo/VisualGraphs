@@ -9,9 +9,14 @@ namespace GrafosImplementados.Classes
         public List<Vertice> Vertices { get; set; }
         public List<Aresta> Arestas { get; set; }
         public bool isDigraph;
-        public Grafo(bool b)
+
+        /// <summary>
+        /// [Grafo Class]
+        /// </summary>
+        /// <param name="__directed__">Tells whether the graph is directed.</param>
+        public Grafo(bool __directed__)
         {
-            isDigraph = b;
+            isDigraph = __directed__;
             Vertices = new List<Vertice>();
             Arestas = new List<Aresta>();
         }
@@ -132,6 +137,7 @@ namespace GrafosImplementados.Classes
                     //adj.Add()
                 }
             }
+            return null;
         }
 
         #endregion

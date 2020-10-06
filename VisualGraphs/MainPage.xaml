@@ -9,6 +9,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Button x:Name="Add_btn" Content="Add" Margin="10,10,0,0" VerticalAlignment="Top" Height="53" Width="148"/>
+        <Button x:Name="Rem_btn" Content="Remove" Margin="163,10,0,0" VerticalAlignment="Top" Height="53" Width="148"/>
 
     </Grid>
 </Page>
