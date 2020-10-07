@@ -1,47 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
-namespace GrafosImplementados.Classes
+namespace VisualGraphs.Classes
 {
     class Grafo
     {
         public List<Vertice> Vertices { get; set; }
         public List<Aresta> Arestas { get; set; }
         public bool isDigraph;
-        public Grafo(bool b)
+
+        /// <summary>
+        /// [Grafo Class]
+        /// </summary>
+        /// <param name="__directed__">Tells whether the graph is directed.</param>
+        public Grafo(bool __directed__)
         {
-            isDigraph = b;
+            isDigraph = __directed__;
             Vertices = new List<Vertice>();
             Arestas = new List<Aresta>();
         }
-
+        /// <summary>
+        /// Adds Vertice into Grafo.
+        /// </summary>
+        /// <param name="v"></param>
         public void AddVertice(Vertice v)
         {
             Vertices.Add(v);
         }
+        /// <summary>
+        /// Overload, creates new Vertice from id and lbl.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="lbl"></param>
+        public void AddVertice(int id, string lbl)
+        {
+            Vertice temp = new Vertice(lbl, id);
+            Vertices.Add(temp);
+        }
+        /// <summary>
+        /// Adds Aresta into Grafo
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
         public bool AddAresta(Aresta a)
         {
             if(a.isDirected == isDigraph)
             {
-                Vertices.Add(a.vertice1);
-                Vertices.Add(a.vertice2);
+                if(!Vertices.Contains(a.vertice1)) 
+                    Vertices.Add(a.vertice1);
+                
+                if(!Vertices.Contains(a.vertice2)) 
+                    Vertices.Add(a.vertice2);
+               
                 Arestas.Add(a);
             }
             return false;
-        }
-
+        }  
+        /// <summary>
+        /// Returns the number of Vertices.
+        /// </summary>
+        /// <returns>Vertices.Count();</returns>
         public int NumVertices()
         {
             return Vertices.Count;
         }
-
+        /// <summary>
+        /// Returns the number of Arestas.
+        /// </summary>
+        /// <returns>Arestas.Count();</returns>
         public int NumArestas()
         {
             return Arestas.Count;
         }
 
         #region Buscas
+        /// <summary>
+        /// Searches the vertice by id.
+        /// </summary>
+        /// <param name="id">The id from the vertice that will be seek.</param>
+        /// <returns>Vertice.atIndex(id);</returns>
         public Vertice BuscaVertice(int id)
         {
             Vertice temp;
@@ -55,17 +94,43 @@ namespace GrafosImplementados.Classes
             }
             return null;
         }
-
-        public void BuscaEmProfundidade()
+        /// <summary>
+        /// Recursive search by depth.
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="visited"></param>
+        protected void DFS_search(int v, bool[] visited)
         {
-            //TODO
+            visited[v] = true;
+            Debug.WriteLine(v + " ");
+
+            List<Vertice> vList = Vertices;
+            foreach (var n in vList)
+            {
+                if (!visited[n._id])
+                    DFS_search(n._id, visited);
+            }
+        }
+        /// <summary>
+        /// Searches all connected vertices from the source by DFS.
+        /// </summary>
+        /// <param name="source">First Vertice to be search</param>
+        public void BuscaEmProfundidade(int source)
+        {
+            bool[] visited = new bool[Vertices.Count];
+
+            DFS_search(source, visited);
         }
 
         public void BuscaEmLargura()
         {
             //TODO
         }
-
+        /// <summary>
+        /// Searches the vertice by label.
+        /// </summary>
+        /// <param name="label">The label from the vertice that will be seek.</param>
+        /// <returns>Vertice.atLabel(label);</returns>
         public Vertice BuscaVertice(string label)
         {
             Vertice temp;
@@ -132,6 +197,7 @@ namespace GrafosImplementados.Classes
                     //adj.Add()
                 }
             }
+            return null;
         }
 
         #endregion

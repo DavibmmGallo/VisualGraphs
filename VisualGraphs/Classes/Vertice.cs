@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GrafosImplementados.Classes
+namespace VisualGraphs.Classes
 {
     class Vertice
     {
