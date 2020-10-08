@@ -132,6 +132,7 @@ namespace GrafosImplementados.Classes
                     //adj.Add()
                 }
             }
+            return null;
         }
 
         #endregion
