@@ -33,12 +33,17 @@ namespace VisualGraphs.Classes
         {
             Box.Text = str;
         }
-
-        public foo()
+        
+        public void UpdateConsole()
         {
-            Debug.WriteLine("GG");
-        }
+            string temp = "";
+            foreach(string str in ConsoleQueue)
+            {
+                temp += str + "\n";
+            }
 
+            Box.Text = temp;
+        }
 
     }
 }
