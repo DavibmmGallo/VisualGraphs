@@ -30,7 +30,12 @@ namespace VisualGraphs
         {
             this.InitializeComponent();
             ApplicationView view = ApplicationView.GetForCurrentView();
-            view.TryEnterFullScreenMode();
+            //view.TryEnterFullScreenMode();
+        }
+
+        async void main_thread()
+        {
+           
         }
 
         #region ADD
@@ -115,9 +120,11 @@ namespace VisualGraphs
                 Vertice vertice_aux = new Vertice(label_box.Text,1);
             }
             else if (selected_item_name == "Aresta")
-                Aresta_add_Control();
+            {
+                Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), new Vertice(v1_box.Text,1), new Vertice(v2_box.Text,2));
+            }
 
-            Console_output.Text += "\n" + selected_item_name + " foi adicionado.";
+            Console_output.Text += "\n" + selected_item_name +" "+ label_box.Text +" foi adicionado.";
             clear_ui_add();
             Add_scene.Visibility = Visibility.Collapsed;
             ComboAdd_box.SelectedItem = "";
