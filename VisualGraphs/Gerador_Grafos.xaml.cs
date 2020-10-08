@@ -26,10 +26,13 @@ namespace VisualGraphs
     public sealed partial class Gerador_Grafos : Page
     {
         string selected_item_name="";
+        private Grafo Graph;
+        private TextConsole myConsole;
         public Gerador_Grafos()
         {
             this.InitializeComponent();
             ApplicationView view = ApplicationView.GetForCurrentView();
+            myConsole = new TextConsole(Console_output);
             //view.TryEnterFullScreenMode();
         }
 
@@ -124,7 +127,8 @@ namespace VisualGraphs
                 Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), new Vertice(v1_box.Text,1), new Vertice(v2_box.Text,2));
             }
 
-            Console_output.Text += "\n" + selected_item_name +" "+ label_box.Text +" foi adicionado.";
+            //Console_output.Text += "\n" + selected_item_name +" "+ label_box.Text +" foi adicionado.";
+            myConsole.SetTextBox("\n" + selected_item_name + " " + label_box.Text + " foi adicionado.");
             clear_ui_add();
             Add_scene.Visibility = Visibility.Collapsed;
             ComboAdd_box.SelectedItem = "";
