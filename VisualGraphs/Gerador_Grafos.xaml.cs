@@ -37,11 +37,11 @@ namespace VisualGraphs
 
             myConsole = new TextConsole(Console_output);
         }
-
+/*
         async void main_thread()
         {
 
-        }
+        }*/
 
         #region ADD
         /// <summary>
@@ -117,20 +117,20 @@ namespace VisualGraphs
             //Create and confirm
             if (selected_item_name == "Grafo")
             {
-                main_grafo = new Grafo(isDigraph.IsChecked.Value);
-                main_grafo.name = label_box.Text;
+                Graph = new Grafo(isDigraph.IsChecked.Value);
+                Graph.name = label_box.Text;
             }
             else if (selected_item_name == "Vértice")
             {
-                Vertice vertice_aux = new Vertice(label_box.Text,main_grafo.NumVertices()+1);
-                main_grafo.AddVertice(vertice_aux);
+                Vertice vertice_aux = new Vertice(label_box.Text, Graph.NumVertices()+1);
+                Graph.AddVertice(vertice_aux);
                 v1_box.Items.Add(vertice_aux.Label);
                 v2_box.Items.Add(vertice_aux.Label);
             }
             else if (selected_item_name == "Aresta")
             {
-                Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text),graph.BuscaVertice(v1_box.SelectedItem.ToString()),graph.BuscaVertice(v2_box.SelectedItem.ToString()));
-                main_grafo.AddAresta(aresta_aux);
+                Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), Graph.BuscaVertice(v1_box.SelectedItem.ToString()), Graph.BuscaVertice(v2_box.SelectedItem.ToString()));
+                Graph.AddAresta(aresta_aux);
             }
 
             

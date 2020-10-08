@@ -34,10 +34,6 @@ namespace VisualGraphs.Classes
             Box.Text = str;
         }
 
-        public foo()
-        {
-            Debug.WriteLine("GG");
-        }
 
 
     }
