@@ -26,12 +26,21 @@ namespace VisualGraphs
     public sealed partial class Gerador_Grafos : Page
     {
         string selected_item_name="";
-        Grafo main_grafo;
+        private Grafo Graph;
+        private TextConsole myConsole;
         public Gerador_Grafos()
         {
             this.InitializeComponent();
             ApplicationView view = ApplicationView.GetForCurrentView();
+
             view.TryEnterFullScreenMode();
+
+            myConsole = new TextConsole(Console_output);
+        }
+
+        async void main_thread()
+        {
+
         }
 
         #region ADD
@@ -120,11 +129,12 @@ namespace VisualGraphs
             }
             else if (selected_item_name == "Aresta")
             {
-                Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text),main_grafo.BuscaVertice(v1_box.SelectedItem.ToString()),main_grafo.BuscaVertice(v2_box.SelectedItem.ToString()));
+                Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text),graph.BuscaVertice(v1_box.SelectedItem.ToString()),graph.BuscaVertice(v2_box.SelectedItem.ToString()));
                 main_grafo.AddAresta(aresta_aux);
             }
 
-            Console_output.Text += "\n" + selected_item_name +" "+ label_box.Text +" foi adicionado.";
+            
+            myConsole.SetTextBox("\n" + selected_item_name + " " + label_box.Text + " foi adicionado.");
             clear_ui_add();
             Add_scene.Visibility = Visibility.Collapsed;
             ComboAdd_box.SelectedItem = "";
