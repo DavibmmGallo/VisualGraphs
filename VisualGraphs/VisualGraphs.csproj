@@ -123,8 +123,8 @@
     <Compile Include="Classes\Grafo.cs" />
     <Compile Include="Classes\TextConsole.cs" />
     <Compile Include="Classes\Vertice.cs" />
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="Gerador_Grafos.xaml.cs">
+      <DependentUpon>Gerador_Grafos.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -148,7 +148,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
+    <Page Include="Gerador_Grafos.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
