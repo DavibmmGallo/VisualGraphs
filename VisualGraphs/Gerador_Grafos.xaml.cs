@@ -133,11 +133,12 @@ namespace VisualGraphs
                 Graph.AddAresta(aresta_aux);
             }
 
-            
-            myConsole.SetTextBox("\n" + selected_item_name + " " + label_box.Text + " foi adicionado.");
+            myConsole.AddStringToConsole("\n" + selected_item_name + " " + label_box.Text + " foi adicionado.");
+
             clear_ui_add();
             Add_scene.Visibility = Visibility.Collapsed;
             ComboAdd_box.SelectedItem = "";
+            myConsole.UpdateConsole();
         }
         #endregion 
     }

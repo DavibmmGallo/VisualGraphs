@@ -33,8 +33,16 @@ namespace VisualGraphs.Classes
         {
             Box.Text = str;
         }
-
-
+        
+        public void UpdateConsole()
+        {
+            string temp = "";
+            foreach(string str in ConsoleQueue)
+            {
+                temp += str + "\n";
+            }
+            Box.Text = temp;
+        }
 
     }
 }
