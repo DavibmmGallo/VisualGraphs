@@ -10,6 +10,7 @@ namespace VisualGraphs.Classes
         public List<Vertice> Vertices { get; set; }
         public List<Aresta> Arestas { get; set; }
         public bool isDigraph;
+        public string name { get; set; }
 
         /// <summary>
         /// [Grafo Class]
