@@ -37,6 +37,15 @@ namespace VisualGraphs.Classes
             N++;
         }
         /// <summary>
+        /// Removes Vertice from Grafo.
+        /// </summary>
+        /// <param name="v"></param>
+        public void RemoveVertice(Vertice v)
+        {
+            Vertices.Remove(v);
+            N--;
+        }
+        /// <summary>
         /// Overload, creates new Vertice from id and lbl.
         /// </summary>
         /// <param name="id"></param>
@@ -66,7 +75,21 @@ namespace VisualGraphs.Classes
             }
             M++;
             return false;
-        }  
+        }
+        /// <summary>
+        /// Adds Aresta into Grafo
+        /// </summary>
+        /// <param name="a">TODO</param>
+        /// <returns></returns>
+        public bool RemoveAresta(Aresta a)
+        {
+            if (a.isDirected == isDigraph)
+            {
+                Arestas.Remove(a);
+            }
+            M--;
+            return false;
+        }
         /// <summary>
         /// Returns the number of Vertices.
         /// </summary>
