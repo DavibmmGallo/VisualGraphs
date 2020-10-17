@@ -127,12 +127,13 @@ namespace VisualGraphs
                 Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), new Vertice(v1_box.Text,1), new Vertice(v2_box.Text,2));
             }
 
-            //Console_output.Text += "\n" + selected_item_name +" "+ label_box.Text +" foi adicionado.";
-            myConsole.AddStringToConsole("\n" + selected_item_name + " " + label_box.Text + " foi adicionado.");
+            
+            myConsole.AddStringToConsole(selected_item_name + " " + label_box.Text + " foi adicionado.");
             clear_ui_add();
             Add_scene.Visibility = Visibility.Collapsed;
             ComboAdd_box.SelectedItem = "";
             myConsole.UpdateConsole();
+           // myConsole.Clear();
         }
         #endregion 
     }

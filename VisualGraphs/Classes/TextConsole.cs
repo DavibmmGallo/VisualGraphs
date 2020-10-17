@@ -12,6 +12,7 @@ namespace VisualGraphs.Classes
     {
         private Queue<string> ConsoleQueue;
         private TextBox Box;
+        private const int MyLimit = 10;
 
         public TextConsole(TextBox t)
         {
@@ -21,28 +22,29 @@ namespace VisualGraphs.Classes
 
         public void AddStringToConsole(string s)
         {
-            if(ConsoleQueue.Count() == 5)
+            Clear();
+            if (ConsoleQueue.Count() == MyLimit)
             {
                 ConsoleQueue.Dequeue();
                 ConsoleQueue.Enqueue(s);
             }
-            ConsoleQueue.Enqueue(s);
-        }
-
-        public void SetTextBox(string str)
-        {
-            Box.Text = str;
+            else
+            {
+                ConsoleQueue.Enqueue(s);
+            }
         }
         
+        private void Clear()
+        {
+            Box.Text = "";
+        }
+
         public void UpdateConsole()
         {
-            string temp = "";
             foreach(string str in ConsoleQueue)
             {
-                temp += str + "\n";
+               Box.Text += str + "\n";
             }
-
-            Box.Text = temp;
         }
 
     }
