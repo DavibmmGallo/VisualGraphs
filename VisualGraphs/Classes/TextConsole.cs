@@ -41,7 +41,6 @@ namespace VisualGraphs.Classes
             {
                 temp += str + "\n";
             }
-
             Box.Text = temp;
         }
 

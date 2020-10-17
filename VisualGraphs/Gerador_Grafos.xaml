@@ -11,14 +11,14 @@
     Background="White">
 
     <Grid Background="#FF6C6767">
-        <Button x:Name="Add_btn" Content="Add" Margin="14,125,0,0" VerticalAlignment="Top" Height="53" Width="184" Click="Show_add_section"/>
-        <Button x:Name="Rem_btn" Content="Remove" Margin="203,125,0,0" VerticalAlignment="Top" Height="53" Width="178"/>
+        <Button x:Name="Add_btn" Content="Add" Margin="14,125,0,0" VerticalAlignment="Top" Height="53" Width="184" Click="Show_sections"/>
+        <Button x:Name="Rem_btn" Content="Remove" Margin="203,125,0,0" VerticalAlignment="Top" Height="53" Width="178" Click="Show_sections"/>
         <TextBlock HorizontalAlignment="Left" Margin="455,32,0,0" TextAlignment="Center" Text="Gerador de Grafos" TextWrapping="Wrap" VerticalAlignment="Top" Height="58" Width="442" SelectionHighlightColor="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" FocusVisualPrimaryBrush="{x:Null}" FontFamily="Adobe Gothic Std B" FontSize="36"/>
         <Canvas Margin="408,125,10,221" Background="White"/>
         <TextBox x:Name="Console_output" HorizontalAlignment="Left" Margin="14,183,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="364" Width="367" IsReadOnly="True" Header="Console" AllowDrop="True"/>
         <TextBox x:Name="Grafo_stats" HorizontalAlignment="Left" Margin="14,572,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="150" Width="1342" Header="Dados"/>
 
-        <Grid x:Name="Add_scene" Background="#F4232323" Visibility="Visible">
+        <Grid x:Name="Add_scene" Background="#F4232323" Visibility="Collapsed">
             <Rectangle x:Name="Add_rect" Width="441" Fill="White" Margin="463,128,462,165"/>
             <Button x:Name="Confirm_add_btn" CornerRadius="3" Content="Confirm" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Confirm_add_item" Margin="807,544,0,0" VerticalAlignment="Top"/>
             <ComboBox x:Name="ComboAdd_box" Canvas.Left="475" Canvas.Top="357" Width="209" Header="Item" PlaceholderText="Add item" Foreground="#FF0F0D0D" Background="#66000000" SelectionChanged="Change_selection" Margin="475,155,0,0">
@@ -27,7 +27,7 @@
                 <x:String>Aresta</x:String>
                 <x:String></x:String>
             </ComboBox>
-            <TextBox x:Name="label_box" Visibility="Collapsed" HorizontalAlignment="Left" Margin="475,243,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="29" Width="208" PlaceholderText="Label"/>
+            <TextBox x:Name="label_box" Visibility="Collapsed" HorizontalAlignment="Left" Margin="475,243,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="29" Width="208" PlaceholderText="Label" SelectionHighlightColor="{ThemeResource ButtonForegroundThemeBrush}"/>
             <TextBlock x:Name="lbl_label" Visibility="Collapsed" HorizontalAlignment="Left" Margin="475,219,0,0" Text="Label" TextWrapping="Wrap" VerticalAlignment="Top" FocusVisualPrimaryBrush="Black" Foreground="Black"/>
             <ComboBox x:Name="v1_box" Visibility="Collapsed" Margin="475,352,0,0" Width="152" Header="Vertice 1" Foreground="Black"/>
             <ComboBox x:Name="v2_box" Visibility="Collapsed" Margin="725,352,0,0" Width="152" Foreground="Black" Header="Vertice 2"/>
@@ -39,6 +39,15 @@
 
         </Grid>
         <Canvas x:Name="Remove_scene" Visibility="Collapsed" Background="#F4232323">
+            <Rectangle x:Name="Rem_rect" Width="546" Fill="White" Margin="463,128,462,165" Height="162" Canvas.Top="150" Canvas.Left="10"/>
+            <Button x:Name="Confirm_Rem_btn" CornerRadius="3" Content="Confirm" Canvas.Left="127" Canvas.Top="-152" Background="#FF00A9F7" Click="Confirm_rem_item" Margin="807,544,0,0"/>
+            <ComboBox x:Name="ComboRem_box" Canvas.Left="42" Canvas.Top="142" Width="209" Header="Item" PlaceholderText="Remove item" Foreground="#FF0F0D0D" Background="#66000000"  Margin="475,155,0,0" SelectionChanged="ComboRem_box_SelectionChanged">
+                <x:String>Grafo</x:String>
+                <x:String>Vértice</x:String>
+                <x:String>Aresta</x:String>
+                <x:String></x:String>
+            </ComboBox>
+            <TextBox x:Name="lbl_rem_box" Canvas.Left="517" Canvas.Top="368" Text="" TextWrapping="Wrap" Width="209" PlaceholderText="Label"/>
 
         </Canvas>
     </Grid>
