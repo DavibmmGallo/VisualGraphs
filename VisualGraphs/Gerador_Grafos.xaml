@@ -18,7 +18,7 @@
         <TextBox x:Name="Console_output" HorizontalAlignment="Left" Margin="14,183,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="364" Width="367" IsReadOnly="True" Header="Console" AllowDrop="True"/>
         <TextBox x:Name="Grafo_stats" HorizontalAlignment="Left" Margin="14,572,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="150" Width="1342" Header="Dados"/>
 
-        <Grid x:Name="Add_scene" Background="#F4232323" Visibility="Collapsed">
+        <Grid x:Name="Add_scene" Background="#F4232323" Visibility="Visible">
             <Rectangle x:Name="Add_rect" Width="441" Fill="White" Margin="463,128,462,165"/>
             <Button x:Name="Confirm_add_btn" CornerRadius="3" Content="Confirm" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Confirm_add_item" Margin="807,544,0,0" VerticalAlignment="Top"/>
             <ComboBox x:Name="ComboAdd_box" Canvas.Left="475" Canvas.Top="357" Width="209" Header="Item" PlaceholderText="Add item" Foreground="#FF0F0D0D" Background="#66000000" SelectionChanged="Change_selection" Margin="475,155,0,0">
