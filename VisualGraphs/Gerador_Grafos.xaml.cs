@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using VisualGraphs.Classes;
 using System.Collections.ObjectModel;
 using Windows.UI.Popups;
+using System.Threading.Tasks;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace VisualGraphs
@@ -37,11 +38,16 @@ namespace VisualGraphs
             this.InitializeComponent();
             ApplicationView view = ApplicationView.GetForCurrentView();
 
-            //view.TryEnterFullScreenMode();
+            view.TryEnterFullScreenMode();
 
             myConsole = new TextConsole(Console_output);
         }
 
+        /// <summary>
+        /// Shows Add and Rem sections
+        /// </summary>
+        /// <param name="sender">Button</param>
+        /// <param name="e"></param>
         private void Show_sections(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
@@ -51,7 +57,16 @@ namespace VisualGraphs
             else
                 Remove_scene.Visibility = Visibility.Visible;
         }
-
+        /// <summary>
+        /// Updates info from Graph
+        /// </summary>
+        void Update_graph_info()
+        {
+            if (Graph_exist) Grafo_stats.Text = Graph.ToString();
+            else Grafo_stats.Text = "Grafo ainda não existe!";
+            myConsole.UpdateConsole();
+        }
+        
         #region ADD
         /// <summary>
         /// Clears all controls from add.
@@ -116,6 +131,11 @@ namespace VisualGraphs
                 Aresta_add_Control();
         }
 
+        /// <summary>
+        /// Checks Add-combobox and confirms the operation
+        /// </summary>
+        /// <param name="sender">Button Confirm</param>
+        /// <param name="e">Routed Event</param>
         private async void Confirm_add_item(object sender, RoutedEventArgs e)
         {
             try
@@ -163,20 +183,39 @@ namespace VisualGraphs
                 await msgdi.ShowAsync();
             }
 
-            
             clear_ui_add();
             Add_scene.Visibility = Visibility.Collapsed;
             ComboAdd_box.SelectedItem = "";
-            myConsole.UpdateConsole();
+
+            Update_graph_info();
         }
         #endregion
 
         #region REMOVE
+        /// <summary>
+        /// Selects the item that will be removed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboRem_box_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cmbx = sender as ComboBox;
+            selected_item_name = cmbx.SelectedItem.ToString();
+            if (selected_item_name == "Grafo")
+                lbl_rem_box.IsReadOnly = true;
+            else
+                lbl_rem_box.IsReadOnly = false;
+        }
+        /// <summary>
+        /// Checks Rem-combobox and confirms the operation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Confirm_rem_item(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (selected_item_name == "Grafo") // TODO
+                if (selected_item_name == "Grafo")
                 {
                     Graph = null; 
                     Graph_exist = false;
@@ -204,18 +243,14 @@ namespace VisualGraphs
                 await msgdi.ShowAsync();
             }
             
-            if (selected_item_name != "") myConsole.AddStringToConsole($"\n{selected_item_name} foi removido.");
+            myConsole.AddStringToConsole($"\n{selected_item_name} foi removido.");
             Remove_scene.Visibility = Visibility.Collapsed;
             ComboRem_box.SelectedItem = "";
-            myConsole.UpdateConsole();
-        }
-        private void ComboRem_box_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var cmbx = sender as ComboBox;
-            selected_item_name = cmbx.SelectedItem.ToString();
-        }
-        #endregion
 
-       
+            Update_graph_info();
+        }
+
+        #endregion
+              
     }
 }

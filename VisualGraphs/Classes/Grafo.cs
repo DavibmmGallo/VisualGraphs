@@ -13,6 +13,7 @@ namespace VisualGraphs.Classes
         protected int M;
         public List<Aresta> Arestas { get; set; }
         public bool isDigraph;
+        protected bool isAciclic;
         public string name { get; set; }
 
         /// <summary>
@@ -24,6 +25,7 @@ namespace VisualGraphs.Classes
             isDigraph = __directed__;
             Vertices = new List<Vertice>();
             Arestas = new List<Aresta>();
+            isAciclic = true;
             N = 0;
             M = 0;
         }
@@ -72,6 +74,8 @@ namespace VisualGraphs.Classes
                     Vertices.Add(a.vertice2);
                
                 Arestas.Add(a);
+
+                if (a.vertice1._id == a.vertice2._id) isAciclic = false; // no longer aciclic
             }
             M++;
             return false;
@@ -131,7 +135,7 @@ namespace VisualGraphs.Classes
         /// </summary>
         /// <param name="v"></param>
         /// <param name="visited"></param>
-        protected void DFS_search(int v, bool[] visited)
+        protected void DFS_search(int v, bool[] visited)//TODO
         {
             visited[v] = true;
             Debug.WriteLine(v + " ");
@@ -139,8 +143,8 @@ namespace VisualGraphs.Classes
             List<Vertice> vList = Vertices;
             foreach (var n in vList)
             {
-                if (!visited[n._id])
-                    DFS_search(n._id, visited);
+                if (!visited[n._id -1])
+                    DFS_search(n._id -1, visited);
             }
         }
         /// <summary>
@@ -149,7 +153,7 @@ namespace VisualGraphs.Classes
         /// <param name="source">First Vertice to be search</param>
         public void BuscaEmProfundidade(int source)
         {
-            bool[] visited = new bool[Vertices.Count];
+            bool[] visited = new bool[N];
 
             DFS_search(source, visited);
         }
@@ -211,11 +215,12 @@ namespace VisualGraphs.Classes
 
         public override string ToString()
         {
-            return "Arestas: " + "\n" + ArestasToString() + "\n" +
-                   "Vertices: " + "\n" + VerticesToString() + "\n" +
-                   "Numero de Arestas: " + NumArestas().ToString() + "\n" +
-                   "Numero de Vertices: " + NumVertices().ToString() + "\n" +
-                   "Direcionado: " + isDigraph.ToString();
+            return $"Arestas: \n{ArestasToString()}" +
+                   $"Vertices: \n{VerticesToString()}\n" +
+                   $"Numero de Arestas: {NumArestas()}\n" +
+                   $"Numero de Vertices: {NumVertices()}\n" +
+                   $"Direcionado: {isDigraph}\t"+
+                   $"Aciclico: {isAciclic}";
         }
 
         public List<Vertice> Adjacencias(Vertice v)
@@ -233,8 +238,6 @@ namespace VisualGraphs.Classes
         }
 
         #endregion
-
-
 
     }
 }
