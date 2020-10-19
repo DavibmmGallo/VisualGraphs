@@ -50,5 +50,6 @@
             <TextBox x:Name="lbl_rem_box" Canvas.Left="517" Canvas.Top="368" Text="" TextWrapping="Wrap" Width="209" PlaceholderText="Label"/>
 
         </Canvas>
+        <Button Content="Button" Margin="1247,43,0,0" VerticalAlignment="Top" Click="Button_Click"/>
     </Grid>
 </Page>

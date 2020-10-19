@@ -17,6 +17,7 @@ using VisualGraphs.Classes;
 using System.Collections.ObjectModel;
 using Windows.UI.Popups;
 using System.Threading.Tasks;
+using System.Diagnostics;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace VisualGraphs
@@ -60,16 +61,7 @@ namespace VisualGraphs
             else
                 Remove_scene.Visibility = Visibility.Visible;
         }
-        /// <summary>
-        /// Updates info from Graph
-        /// </summary>
-        void Update_graph_info()
-        {
-            if (Graph_exist) Grafo_stats.Text = Graph.ToString();
-            else Grafo_stats.Text = "Grafo ainda não existe!";
-            myConsole.UpdateConsole();
-        }
-        
+               
         #region ADD
         /// <summary>
         /// Clears all controls from add.
@@ -165,11 +157,9 @@ namespace VisualGraphs
                     {
                         case "Vértice":
                             {
-                                Vertice vertice_aux = new Vertice(label_box.Text, Graph.NumVertices() + 1);
+                                Vertice vertice_aux = new Vertice(label_box.Text, Graph.NumVertices());
 
                                 Graph.AddVertice(vertice_aux);
-                                Debug.WriteLine(Graph.NumVertices());
-                                Debug.WriteLine(Graph.NumArestas());
                                 v1_box.Items.Add(vertice_aux.Label);
                                 v2_box.Items.Add(vertice_aux.Label);
                                 break;
@@ -230,12 +220,11 @@ namespace VisualGraphs
                 {
                     Graph = null; 
                     Graph_exist = false;
+                    graphStats.SetGrafo(Graph);
                 }
                 else if (selected_item_name == "Vértice") //TODO
                 {
                     Vertice vertice_aux = Graph.BuscaVertice(lbl_rem_box.Text);
-
-                    //busca todas as arestas relacionadas e apaga
 
                     Graph.RemoveVertice(vertice_aux);
 
@@ -254,27 +243,19 @@ namespace VisualGraphs
                 await msgdi.ShowAsync();
             }
 
-            
-            myConsole.AddStringToConsole(selected_item_name + " " + label_box.Text + " foi adicionado.");
-            clear_ui_add();
-            Add_scene.Visibility = Visibility.Collapsed;
-            ComboAdd_box.SelectedItem = "";
-            myConsole.Update();
-            graphStats.Update();
-
             if (selected_item_name != "") myConsole.AddStringToConsole($"\n{selected_item_name} foi removido.");
             Remove_scene.Visibility = Visibility.Collapsed;
             ComboRem_box.SelectedItem = "";
             myConsole.Update();
-           // myConsole.Clear();
-        }
-        private void ComboRem_box_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var cmbx = sender as ComboBox;
-            selected_item_name = cmbx.SelectedItem.ToString();
+            graphStats.Update();
         }
 
         #endregion
-              
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            msgdi = new MessageDialog(Graph.BuscaEmLargura(0));
+            await msgdi.ShowAsync();
+        }
     }
 }

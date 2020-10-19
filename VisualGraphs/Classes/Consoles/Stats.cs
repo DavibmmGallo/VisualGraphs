@@ -21,19 +21,14 @@ namespace VisualGraphs.Classes
         public void SetGrafo(Grafo g)
         {
             Grafo = g;
-            int NComponents = g.NumVertices() + g.NumArestas();
-            Box.Text = " Nome: " + Grafo.name + "\n" +
-                " Componentes: " + NComponents + "\n" + 
-                " Numero de Arestas: " + Grafo.NumArestas() + "\n" +
-                " Numero de Vertices: " + Grafo.NumVertices();
+            Update();
         }
 
         public override void Update()
         {
-            int NComponents;
             if (Grafo != null)
             {
-                NComponents = Grafo.NumVertices() + Grafo.NumArestas();
+                int NComponents = Grafo.NumComponents();
                 Box.Text = " Nome: " + Grafo.name + "\n" +
                            " Componentes: " + NComponents + "\n" +
                            " Numero de Arestas: " + Grafo.NumArestas() + "\n" +

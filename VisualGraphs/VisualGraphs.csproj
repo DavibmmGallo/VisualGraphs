@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\AdjList.cs" />
     <Compile Include="Classes\Aresta.cs" />
     <Compile Include="Classes\Consoles\Console.cs" />
     <Compile Include="Classes\Grafo.cs" />

@@ -9,6 +9,7 @@ namespace VisualGraphs.Classes
     {
 
         public List<Vertice> Vertices { get; set; }
+        private AdjList Adj { get; set; }
         public List<Aresta> Arestas { get; set; }
         public bool isDigraph;
         protected bool isAciclic;
@@ -23,6 +24,7 @@ namespace VisualGraphs.Classes
             isDigraph = __directed__;
             Vertices = new List<Vertice>();
             Arestas = new List<Aresta>();
+            Adj = new AdjList(this);
             isAciclic = true;
         }
         /// <summary>
@@ -39,6 +41,7 @@ namespace VisualGraphs.Classes
         /// <param name="v"></param>
         public void RemoveVertice(Vertice v)
         {
+            Adj.Clear_adj(v, this);
             Vertices.Remove(v);
         }
         /// <summary>
@@ -125,16 +128,15 @@ namespace VisualGraphs.Classes
         /// </summary>
         /// <param name="v"></param>
         /// <param name="visited"></param>
-        protected void DFS_search(int v, bool[] visited)//TODO
+        protected void DFS_search(int v, bool[] visited, Action action)//TODO
         {
             visited[v] = true;
-            Debug.WriteLine(v + " ");
+            action();
 
-            List<Vertice> vList = Vertices;
-            foreach (var n in vList)
+            foreach (var n in Adj.get_Adj()[v])
             {
-                if (!visited[n._id -1])
-                    DFS_search(n._id -1, visited);
+                if (!visited[n])
+                    DFS_search(n, visited, action);
             }
         }
         /// <summary>
@@ -143,14 +145,45 @@ namespace VisualGraphs.Classes
         /// <param name="source">First Vertice to be search</param>
         public void BuscaEmProfundidade(int source)
         {
-            bool[] visited = new bool[N];
+            bool[] visited = new bool[Vertices.Count];
 
-            DFS_search(source, visited);
+            DFS_search(source, visited,()=> { Debug.WriteLine(source + " "); });
         }
-
-        public void BuscaEmLargura()
+        /// <summary>
+        /// Searches all connected vertices from the source by BFS.
+        /// </summary>
+        /// <param name="source">First Vertice to be search</param>
+        public string BuscaEmLargura(int source)
         {
-            //TODO
+            int count = 0;
+            string out_put = "";
+            int[] num = new int[Vertices.Count];
+
+            for (int n = 0; n < Vertices.Count; n++)
+                num[n] = -1;
+
+            Queue<int> fila = new Queue<int>();
+
+            num[source] = count++;
+
+            fila.Enqueue(source);
+
+            while (fila.Count > 0)
+            {
+                var vertex = fila.Dequeue();
+                out_put += BuscaVertice(vertex).Label;
+
+                foreach (var n in Adj.get_Adj()[vertex])
+                {
+                    if(num[n] == -1)
+                    {
+                        num[n] = count++;
+                        fila.Enqueue(n);
+                    }
+                }
+            }
+            fila.Clear();
+            return out_put;
         }
         /// <summary>
         /// Searches the vertice by label.
@@ -169,6 +202,29 @@ namespace VisualGraphs.Classes
                 }
             }
             return null;
+        }
+        /// <summary>
+        /// Returns the number of components from Graph
+        /// </summary>
+        /// <returns></returns>
+        public int NumComponents()
+        {
+            bool[] marked = new bool[Vertices.Count];
+            Adj.Update(this);
+            int count = 0;
+
+            for (int i = 0; i < Vertices.Count; i++)
+                marked[i] = false;
+            
+            for(int j = 0; j < Vertices.Count; j++)
+            {
+                if (!marked[j])
+                {
+                    DFS_search(j, marked,()=> { });
+                    count++;
+                }
+            }
+            return count;
         }
         #endregion
 
