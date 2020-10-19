@@ -11,12 +11,12 @@
     Background="White">
 
     <Grid Background="#FF6C6767">
-        <Button x:Name="Add_btn" Content="Add" Margin="14,125,0,0" VerticalAlignment="Top" Height="53" Width="184" Click="Show_sections"/>
-        <Button x:Name="Rem_btn" Content="Remove" Margin="203,125,0,0" VerticalAlignment="Top" Height="53" Width="178" Click="Show_sections"/>
+        <Button x:Name="Add_btn" Content="Add" Margin="14,99,0,0" VerticalAlignment="Top" Height="53" Width="184" Click="Show_sections" />
+        <Button x:Name="Rem_btn" Content="Remove" Margin="203,99,0,0" VerticalAlignment="Top" Height="53" Width="178" Click="Show_sections"/>
         <TextBlock HorizontalAlignment="Left" Margin="455,32,0,0" TextAlignment="Center" Text="Gerador de Grafos" TextWrapping="Wrap" VerticalAlignment="Top" Height="58" Width="442" SelectionHighlightColor="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" FocusVisualPrimaryBrush="{x:Null}" FontFamily="Adobe Gothic Std B" FontSize="36"/>
-        <Canvas Margin="408,125,10,221" Background="White"/>
-        <TextBox x:Name="Console_output" HorizontalAlignment="Left" Margin="14,183,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="364" Width="367" IsReadOnly="True" Header="Console" AllowDrop="True"/>
-        <TextBox x:Name="Grafo_stats" IsReadOnly="True" HorizontalAlignment="Left" Margin="14,572,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="150" Width="1342" Header="Dados"/>
+        <Canvas Margin="408,99,10,247" Background="White"/>
+        <TextBox x:Name="Console_output" HorizontalAlignment="Left" Margin="14,157,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="364" Width="367" IsReadOnly="True" Header="Console" AllowDrop="True"/>
+        <TextBox x:Name="Grafo_stats" HorizontalAlignment="Left" Margin="14,526,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="150" Width="1342" Header="Dados" IsReadOnly="True"/>
 
         <Grid x:Name="Add_scene" Background="#F4232323" Visibility="Collapsed">
             <Rectangle x:Name="Add_rect" Width="441" Fill="White" Margin="463,128,462,165"/>
