@@ -16,7 +16,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="455,32,0,0" TextAlignment="Center" Text="Gerador de Grafos" TextWrapping="Wrap" VerticalAlignment="Top" Height="58" Width="442" SelectionHighlightColor="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" FocusVisualPrimaryBrush="{x:Null}" FontFamily="Adobe Gothic Std B" FontSize="36"/>
         <Canvas Margin="408,125,10,221" Background="White"/>
         <TextBox x:Name="Console_output" HorizontalAlignment="Left" Margin="14,183,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="364" Width="367" IsReadOnly="True" Header="Console" AllowDrop="True"/>
-        <TextBox x:Name="Grafo_stats" HorizontalAlignment="Left" Margin="14,572,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="150" Width="1342" Header="Dados"/>
+        <TextBox x:Name="Grafo_stats" IsReadOnly="True" HorizontalAlignment="Left" Margin="14,572,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="150" Width="1342" Header="Dados"/>
 
         <Grid x:Name="Add_scene" Background="#F4232323" Visibility="Collapsed">
             <Rectangle x:Name="Add_rect" Width="441" Fill="White" Margin="463,128,462,165"/>

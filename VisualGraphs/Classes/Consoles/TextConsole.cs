@@ -8,15 +8,13 @@ using Windows.UI.Xaml.Controls;
 
 namespace VisualGraphs.Classes
 {
-    class TextConsole
+    class TextConsole: Console
     {
         private Queue<string> ConsoleQueue;
-        private TextBox Box;
         private const int MyLimit = 10;
 
-        public TextConsole(TextBox t)
+        public TextConsole(TextBox t):base(t)
         {
-            Box = t;
             ConsoleQueue = new Queue<string>();
         }
 
@@ -34,12 +32,12 @@ namespace VisualGraphs.Classes
             }
         }
         
-        private void Clear()
+        public override void Clear()
         {
             Box.Text = "";
         }
 
-        public void UpdateConsole()
+        public override void Update()
         {
             foreach(string str in ConsoleQueue)
             {

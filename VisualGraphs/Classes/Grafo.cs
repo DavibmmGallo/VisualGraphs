@@ -9,8 +9,6 @@ namespace VisualGraphs.Classes
     {
 
         public List<Vertice> Vertices { get; set; }
-        protected int N;
-        protected int M;
         public List<Aresta> Arestas { get; set; }
         public bool isDigraph;
         public string name { get; set; }
@@ -24,8 +22,6 @@ namespace VisualGraphs.Classes
             isDigraph = __directed__;
             Vertices = new List<Vertice>();
             Arestas = new List<Aresta>();
-            N = 0;
-            M = 0;
         }
         /// <summary>
         /// Adds Vertice into Grafo.
@@ -34,7 +30,6 @@ namespace VisualGraphs.Classes
         public void AddVertice(Vertice v)
         {
             Vertices.Add(v);
-            N++;
         }
         /// <summary>
         /// Removes Vertice from Grafo.
@@ -43,7 +38,6 @@ namespace VisualGraphs.Classes
         public void RemoveVertice(Vertice v)
         {
             Vertices.Remove(v);
-            N--;
         }
         /// <summary>
         /// Overload, creates new Vertice from id and lbl.
@@ -52,9 +46,7 @@ namespace VisualGraphs.Classes
         /// <param name="lbl"></param>
         public void AddVertice(int id, string lbl)
         {
-            Vertice temp = new Vertice(lbl, id);
-            Vertices.Add(temp);
-            N++;
+            Vertices.Add(new Vertice(lbl, id));
         }
         /// <summary>
         /// Adds Aresta into Grafo
@@ -73,7 +65,6 @@ namespace VisualGraphs.Classes
                
                 Arestas.Add(a);
             }
-            M++;
             return false;
         }
         /// <summary>
@@ -87,7 +78,6 @@ namespace VisualGraphs.Classes
             {
                 Arestas.Remove(a);
             }
-            M--;
             return false;
         }
         /// <summary>
@@ -96,7 +86,7 @@ namespace VisualGraphs.Classes
         /// <returns>Vertices.Count();</returns>
         public int NumVertices()
         {
-            return N;
+            return Vertices.Count;
         }
         /// <summary>
         /// Returns the number of Arestas.
@@ -104,7 +94,7 @@ namespace VisualGraphs.Classes
         /// <returns>Arestas.Count();</returns>
         public int NumArestas()
         {
-            return N;
+            return Arestas.Count;
         }
 
         #region Buscas

@@ -120,8 +120,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Aresta.cs" />
+    <Compile Include="Classes\Consoles\Console.cs" />
     <Compile Include="Classes\Grafo.cs" />
-    <Compile Include="Classes\TextConsole.cs" />
+    <Compile Include="Classes\Consoles\Stats.cs" />
+    <Compile Include="Classes\Consoles\TextConsole.cs" />
     <Compile Include="Classes\Vertice.cs" />
     <Compile Include="Gerador_Grafos.xaml.cs">
       <DependentUpon>Gerador_Grafos.xaml</DependentUpon>

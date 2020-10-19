@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using VisualGraphs.Classes;
 using System.Collections.ObjectModel;
 using Windows.UI.Popups;
+using System.Diagnostics;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace VisualGraphs
@@ -31,6 +32,7 @@ namespace VisualGraphs
         private bool Graph_exist = false; //temporary!!!
         private TextConsole myConsole;
         private MessageDialog msgdi;
+        private Stats graphStats;
 
         public Gerador_Grafos()
         {
@@ -40,6 +42,8 @@ namespace VisualGraphs
             //view.TryEnterFullScreenMode();
 
             myConsole = new TextConsole(Console_output);
+            graphStats = new Stats(Grafo_stats);
+            graphStats.Clear();
         }
 
         private void Show_sections(object sender, RoutedEventArgs e)
@@ -133,23 +137,31 @@ namespace VisualGraphs
                         Graph = new Grafo(isDigraph.IsChecked.Value);
                         Graph.name = label_box.Text;
                         Graph_exist = true;
+                        graphStats.SetGrafo(Graph);
                     }
                 }
                 if (Graph_exist)
                 {
-                    if (selected_item_name == "Vértice")
+                    switch (selected_item_name)
                     {
-                        Vertice vertice_aux = new Vertice(label_box.Text, Graph.NumVertices() + 1);
+                        case "Vértice":
+                            {
+                                Vertice vertice_aux = new Vertice(label_box.Text, Graph.NumVertices() + 1);
 
-                        Graph.AddVertice(vertice_aux);
+                                Graph.AddVertice(vertice_aux);
+                                Debug.WriteLine(Graph.NumVertices());
+                                Debug.WriteLine(Graph.NumArestas());
+                                v1_box.Items.Add(vertice_aux.Label);
+                                v2_box.Items.Add(vertice_aux.Label);
+                                break;
+                            }
 
-                        v1_box.Items.Add(vertice_aux.Label);
-                        v2_box.Items.Add(vertice_aux.Label);
-                    }
-                    else if (selected_item_name == "Aresta")
-                    {
-                        Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), Graph.BuscaVertice(v1_box.SelectedItem.ToString()), Graph.BuscaVertice(v2_box.SelectedItem.ToString()), Graph.isDigraph);
-                        Graph.AddAresta(aresta_aux);
+                        case "Aresta":
+                            {
+                                Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), Graph.BuscaVertice(v1_box.SelectedItem.ToString()), Graph.BuscaVertice(v2_box.SelectedItem.ToString()), Graph.isDigraph);
+                                Graph.AddAresta(aresta_aux);
+                                break;
+                            }
                     }
                     if (selected_item_name != "") myConsole.AddStringToConsole($"\n{selected_item_name} {label_box.Text} foi adicionado.");
                 }
@@ -167,7 +179,8 @@ namespace VisualGraphs
             clear_ui_add();
             Add_scene.Visibility = Visibility.Collapsed;
             ComboAdd_box.SelectedItem = "";
-            myConsole.UpdateConsole();
+            myConsole.Update();
+            graphStats.Update();
         }
         #endregion
 
@@ -209,12 +222,13 @@ namespace VisualGraphs
             clear_ui_add();
             Add_scene.Visibility = Visibility.Collapsed;
             ComboAdd_box.SelectedItem = "";
-            myConsole.UpdateConsole();
+            myConsole.Update();
+            graphStats.Update();
 
             if (selected_item_name != "") myConsole.AddStringToConsole($"\n{selected_item_name} foi removido.");
             Remove_scene.Visibility = Visibility.Collapsed;
             ComboRem_box.SelectedItem = "";
-            myConsole.UpdateConsole();
+            myConsole.Update();
            // myConsole.Clear();
         }
         private void ComboRem_box_SelectionChanged(object sender, SelectionChangedEventArgs e)
