@@ -1,27 +1,53 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-
+using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Provider;
+using Windows.UI.Popups;
 
 namespace VisualGraphs.Classes
 {
     class LogManager
     {
-        private string pathDirectory;
-        private StreamWriter writer;
+        private FileSavePicker savePicker = new FileSavePicker();
+        private MessageDialog msgdi;
 
         public LogManager()
         {
-            pathDirectory = @"C:\Users\souza\AppData";
-            Debug.WriteLine(pathDirectory);
-            writer = File.CreateText(pathDirectory);
         }
 
-
-        public void TesteFileSave(Grafo g)
+        public async Task SaveAsync(string content)
         {
-            writer.WriteLine(g.ToString());
-            writer.Close();
+            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            savePicker.FileTypeChoices.Add("Plain Text", new List<string>() { ".txt" });
+            savePicker.SuggestedFileName = "New Document";
+
+            StorageFile file = await savePicker.PickSaveFileAsync();
+            if (file != null)
+            {
+                CachedFileManager.DeferUpdates(file);
+                await FileIO.WriteTextAsync(file, content);
+
+                FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
+
+                if (status == FileUpdateStatus.Complete)
+                {
+                    msgdi = new MessageDialog($"File " + file.Name + " was saved.");
+                }
+                else
+                {
+                    msgdi = new MessageDialog($"File " + file.Name + " couldn't be saved.");
+                }
+            }
+            else
+            {
+                msgdi = new MessageDialog($"Operation cancelled.");
+
+            }
+            await msgdi.ShowAsync();
         }
 
     }

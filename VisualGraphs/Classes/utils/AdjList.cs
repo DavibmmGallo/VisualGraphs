@@ -61,7 +61,7 @@ namespace VisualGraphs.Classes
             N = grafo.NumVertices();
             M = grafo.NumArestas();
 
-            while (Adj.Count < N)
+            while (Adj.Count < N) { 
                 Adj.Add(new List<int>());
             }
 
@@ -135,35 +135,5 @@ namespace VisualGraphs.Classes
             return retrn;
         }
 
-        public async Task SaveAsync()
-        {
-            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            savePicker.FileTypeChoices.Add("Plain Text", new List<string>() { ".txt" });
-            savePicker.SuggestedFileName = "New Document";
-
-            StorageFile file = await savePicker.PickSaveFileAsync();
-            if (file != null)
-            {
-                CachedFileManager.DeferUpdates(file);
-                await FileIO.WriteTextAsync(file, this.ToString());
-
-                FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
-
-                if (status == FileUpdateStatus.Complete)
-                {
-                    msgdi = new MessageDialog($"File " + file.Name + " was saved.");
-                }
-                else
-                {
-                    msgdi = new MessageDialog($"File " + file.Name + " couldn't be saved.");
-                }
-            }
-            else
-            {
-                msgdi = new MessageDialog($"Operation cancelled.");
-
-            }
-            await msgdi.ShowAsync();
-        }
     }
 }
