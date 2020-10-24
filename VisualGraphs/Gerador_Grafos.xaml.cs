@@ -148,7 +148,6 @@ namespace VisualGraphs
                         Graph = new Grafo(isDigraph.IsChecked.Value);
                         Graph.name = label_box.Text;
                         Graph_exist = true;
-                        graphStats.SetGrafo(Graph);
                     }
                 }
                 if (Graph_exist)
@@ -188,7 +187,7 @@ namespace VisualGraphs
             Add_scene.Visibility = Visibility.Collapsed;
             ComboAdd_box.SelectedItem = "";
             myConsole.Update();
-            graphStats.Update();
+            graphStats.Clear();
         }
         #endregion
 
@@ -256,6 +255,22 @@ namespace VisualGraphs
         {
             msgdi = new MessageDialog(Graph.BuscaEmLargura(0));
             await msgdi.ShowAsync();
+        }
+        private  void calcular_on_click(object sender, RoutedEventArgs e)
+        {
+            if(Graph != null)
+            {
+                graphStats.SetGrafo(Graph);
+                Debug.WriteLine("Calculos efetuados");
+                myConsole.AddStringToConsole("Calculos efetuados");
+                myConsole.Update();
+            }
+            else
+            {
+                Debug.WriteLine("Erro ao calcular");
+                myConsole.AddStringToConsole("Erro ao calcular componentes");
+                myConsole.Update();
+            }
         }
     }
 }

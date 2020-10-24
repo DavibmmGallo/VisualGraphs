@@ -48,8 +48,11 @@ namespace VisualGraphs.Classes
             N = grafo.NumVertices();
             M = grafo.NumArestas();
 
-            if (Adj.Count < N)
+            while(Adj.Count < N)
+            {
                 Adj.Add(new List<int>());
+            }
+
 
             foreach (var aresta in grafo.Arestas)
             {
