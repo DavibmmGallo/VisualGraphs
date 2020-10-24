@@ -8,18 +8,20 @@ namespace VisualGraphs.Classes
     class LogManager
     {
         private string pathDirectory;
-        Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-        Windows.Storage.StorageFile sampleFile =  storageFolder.GetFileAsync("sample.txt");
+        private StreamWriter writer;
+
         public LogManager()
         {
-            pathDirectory = @"C:\Users\souza\Documents\GitHub\VisualGraphs2";
+            pathDirectory = @"C:\Users\souza\AppData";
             Debug.WriteLine(pathDirectory);
+            writer = File.CreateText(pathDirectory);
         }
 
 
         public void TesteFileSave(Grafo g)
         {
-            System.IO.File.WriteAllText(pathDirectory, g.ToString());
+            writer.WriteLine(g.ToString());
+            writer.Close();
         }
 
     }
