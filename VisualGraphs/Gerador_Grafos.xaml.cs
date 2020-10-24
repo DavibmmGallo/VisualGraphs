@@ -258,9 +258,9 @@ namespace VisualGraphs
             msgdi = new MessageDialog(Graph.BuscaEmLargura(0));
             await msgdi.ShowAsync();
             MatrizAdj matriz = new MatrizAdj(Graph);
-            await matriz.SaveAsync();
+            await log.SaveAsync(matriz.ToString());
         }
-        private  void calcular_on_click(object sender, RoutedEventArgs e)
+        private void calcular_on_click(object sender, RoutedEventArgs e)
         {
             if(Graph != null)
             {
@@ -277,9 +277,9 @@ namespace VisualGraphs
             }
         }
 
-        private void save_log(object sender, RoutedEventArgs e)
+        private async void save_log(object sender, RoutedEventArgs e)
         {
-            log.TesteFileSave(Graph);
+            await log.SaveAsync(Graph.ToString());
         }
     }
 }

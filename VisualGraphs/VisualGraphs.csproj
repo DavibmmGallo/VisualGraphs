@@ -119,12 +119,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\utils\AdjList.cs" />
     <Compile Include="Classes\Aresta.cs" />
     <Compile Include="Classes\Consoles\Console.cs" />
     <Compile Include="Classes\Grafo.cs" />
     <Compile Include="Classes\Consoles\Stats.cs" />
     <Compile Include="Classes\Consoles\TextConsole.cs" />
-    <Compile Include="Classes\utils\AdjList.cs" />
     <Compile Include="Classes\utils\LogManager.cs" />
     <Compile Include="Classes\utils\MatrizAdj.cs" />
     <Compile Include="Classes\Vertice.cs" />
