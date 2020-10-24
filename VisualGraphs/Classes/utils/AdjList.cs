@@ -1,8 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Provider;
+using Windows.UI.Popups;
+using Windows.UI.Xaml;
 
 namespace VisualGraphs.Classes
 {
@@ -14,6 +21,8 @@ namespace VisualGraphs.Classes
         private List<List<int>> Adj;
         private int N { get; set; }
         private int M { get; set; }
+        private FileSavePicker savePicker = new FileSavePicker();
+        private MessageDialog msgdi;
         /// <summary>
         /// Constructor
         /// </summary>
@@ -23,6 +32,10 @@ namespace VisualGraphs.Classes
             Adj = new List<List<int>>();
             N = grafo.NumVertices();
             M = grafo.NumArestas();
+
+            while (Adj.Count < N)
+                Adj.Add(new List<int>());
+
             foreach (var aresta in grafo.Arestas)
             {
                 Adj[aresta.vertice1._id].Add(aresta.vertice2._id);
@@ -48,7 +61,7 @@ namespace VisualGraphs.Classes
             N = grafo.NumVertices();
             M = grafo.NumArestas();
 
-            if (Adj.Count < N)
+            while (Adj.Count < N)
                 Adj.Add(new List<int>());
 
             foreach (var aresta in grafo.Arestas)
@@ -119,18 +132,36 @@ namespace VisualGraphs.Classes
             }
             return retrn;
         }
-        /*public List<Vertice> Adjacencias(Vertice v)
+
+        public async Task SaveAsync()
         {
-            List<Vertice> adj = new List<Vertice>();
-            if (v == null || !Vertices.Contains(v)) return null;
-            foreach (Aresta a in Arestas)
+            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            savePicker.FileTypeChoices.Add("Plain Text", new List<string>() { ".txt" });
+            savePicker.SuggestedFileName = "New Document";
+
+            StorageFile file = await savePicker.PickSaveFileAsync();
+            if (file != null)
             {
-                if (a.Contains(v))
+                CachedFileManager.DeferUpdates(file);
+                await FileIO.WriteTextAsync(file, this.ToString());
+
+                FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
+
+                if (status == FileUpdateStatus.Complete)
                 {
-                    //action(a,Arestas);
+                    msgdi = new MessageDialog($"File " + file.Name + " was saved.");
+                }
+                else
+                {
+                    msgdi = new MessageDialog($"File " + file.Name + " couldn't be saved.");
                 }
             }
-            return null;
-        }*/
+            else
+            {
+                msgdi = new MessageDialog($"Operation cancelled.");
+
+            }
+            await msgdi.ShowAsync();
+        }
     }
 }

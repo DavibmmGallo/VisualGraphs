@@ -256,6 +256,8 @@ namespace VisualGraphs
         {
             msgdi = new MessageDialog(Graph.BuscaEmLargura(0));
             await msgdi.ShowAsync();
+            MatrizAdj matriz = new MatrizAdj(Graph);
+            await matriz.SaveAsync();
         }
     }
 }

@@ -126,6 +126,8 @@
     <Compile Include="Classes\Consoles\Stats.cs" />
     <Compile Include="Classes\Consoles\TextConsole.cs" />
     <Compile Include="Classes\LogManager.cs" />
+    <Compile Include="Classes\MatrizAdj.cs" />
+    <Compile Include="Classes\utils\Excel.cs" />
     <Compile Include="Classes\Vertice.cs" />
     <Compile Include="Gerador_Grafos.xaml.cs">
       <DependentUpon>Gerador_Grafos.xaml</DependentUpon>
