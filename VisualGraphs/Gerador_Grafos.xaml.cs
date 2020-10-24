@@ -34,6 +34,7 @@ namespace VisualGraphs
         private TextConsole myConsole;
         private MessageDialog msgdi;
         private Stats graphStats;
+        private LogManager log;
 
         public Gerador_Grafos()
         {
@@ -45,6 +46,7 @@ namespace VisualGraphs
             myConsole = new TextConsole(Console_output);
             graphStats = new Stats(Grafo_stats);
             graphStats.Clear();
+            log = new LogManager();
         }
 
         /// <summary>
@@ -271,6 +273,11 @@ namespace VisualGraphs
                 myConsole.AddStringToConsole("Erro ao calcular componentes");
                 myConsole.Update();
             }
+        }
+
+        private void save_log(object sender, RoutedEventArgs e)
+        {
+            log.TesteFileSave(Graph);
         }
     }
 }
