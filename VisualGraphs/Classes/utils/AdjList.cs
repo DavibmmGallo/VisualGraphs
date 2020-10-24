@@ -62,6 +62,7 @@ namespace VisualGraphs.Classes
             M = grafo.NumArestas();
 
             while (Adj.Count < N)
+            { 
                 Adj.Add(new List<int>());
             }
 
