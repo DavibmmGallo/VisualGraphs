@@ -34,6 +34,7 @@ namespace VisualGraphs
         private TextConsole myConsole;
         private MessageDialog msgdi;
         private Stats graphStats;
+        private LogManager log;
 
         public Gerador_Grafos()
         {
@@ -45,6 +46,7 @@ namespace VisualGraphs
             myConsole = new TextConsole(Console_output);
             graphStats = new Stats(Grafo_stats);
             graphStats.Clear();
+            log = new LogManager();
         }
 
         /// <summary>
@@ -148,7 +150,6 @@ namespace VisualGraphs
                         Graph = new Grafo(isDigraph.IsChecked.Value);
                         Graph.name = label_box.Text;
                         Graph_exist = true;
-                        graphStats.SetGrafo(Graph);
                     }
                 }
                 if (Graph_exist)
@@ -188,7 +189,7 @@ namespace VisualGraphs
             Add_scene.Visibility = Visibility.Collapsed;
             ComboAdd_box.SelectedItem = "";
             myConsole.Update();
-            graphStats.Update();
+            graphStats.Clear();
         }
         #endregion
 
@@ -258,6 +259,27 @@ namespace VisualGraphs
             await msgdi.ShowAsync();
             MatrizAdj matriz = new MatrizAdj(Graph);
             await matriz.SaveAsync();
+        }
+        private  void calcular_on_click(object sender, RoutedEventArgs e)
+        {
+            if(Graph != null)
+            {
+                graphStats.SetGrafo(Graph);
+                Debug.WriteLine("Calculos efetuados");
+                myConsole.AddStringToConsole("Calculos efetuados");
+                myConsole.Update();
+            }
+            else
+            {
+                Debug.WriteLine("Erro ao calcular");
+                myConsole.AddStringToConsole("Erro ao calcular componentes");
+                myConsole.Update();
+            }
+        }
+
+        private void save_log(object sender, RoutedEventArgs e)
+        {
+            log.TesteFileSave(Graph);
         }
     }
 }

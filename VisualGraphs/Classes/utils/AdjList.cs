@@ -63,6 +63,8 @@ namespace VisualGraphs.Classes
 
             while (Adj.Count < N)
                 Adj.Add(new List<int>());
+            }
+
 
             foreach (var aresta in grafo.Arestas)
             {
