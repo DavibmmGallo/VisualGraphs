@@ -257,6 +257,8 @@ namespace VisualGraphs
         {
             msgdi = new MessageDialog(Graph.BuscaEmLargura(0));
             await msgdi.ShowAsync();
+            MatrizAdj matriz = new MatrizAdj(Graph);
+            await matriz.SaveAsync();
         }
         private  void calcular_on_click(object sender, RoutedEventArgs e)
         {

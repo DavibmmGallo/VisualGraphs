@@ -7,7 +7,6 @@ namespace VisualGraphs.Classes
 {
     class Grafo
     {
-
         public List<Vertice> Vertices { get; set; }
         private AdjList Adj { get; set; }
         public List<Aresta> Arestas { get; set; }
