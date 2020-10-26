@@ -16,8 +16,6 @@ namespace VisualGraphs.Classes
 
         private Grafo grafo;
 
-        private FileSavePicker savePicker = new FileSavePicker();
-        private MessageDialog msgdi;
 
         bool is_bounded(Vertice vx, Vertice vy)
         {

@@ -163,6 +163,8 @@ namespace VisualGraphs
                                 Graph.AddVertice(vertice_aux);
                                 v1_box.Items.Add(vertice_aux.Label);
                                 v2_box.Items.Add(vertice_aux.Label);
+                                v1_rem_box.Items.Add(vertice_aux.Label);
+                                v2_rem_box.Items.Add(vertice_aux.Label);
                                 break;
                             }
 
@@ -204,9 +206,23 @@ namespace VisualGraphs
             var cmbx = sender as ComboBox;
             selected_item_name = cmbx.SelectedItem.ToString();
             if (selected_item_name == "Grafo")
-                lbl_rem_box.IsReadOnly = true;
-            else
-                lbl_rem_box.IsReadOnly = false;
+            {
+                v1_rem_box.Visibility = Visibility.Collapsed;
+                v2_rem_box.Visibility = Visibility.Collapsed;
+                lbl_rem_box.Visibility = Visibility.Collapsed;
+            }                
+            else if (selected_item_name == "Aresta") 
+            {
+                v1_rem_box.Visibility = Visibility.Visible;
+                v2_rem_box.Visibility = Visibility.Visible;
+                lbl_rem_box.Visibility = Visibility.Collapsed;
+            }
+            else if(selected_item_name == "Vértice")
+            {
+                v1_rem_box.Visibility = Visibility.Collapsed;
+                v2_rem_box.Visibility = Visibility.Collapsed;
+                lbl_rem_box.Visibility = Visibility.Visible;
+            }
         }
         /// <summary>
         /// Checks Rem-combobox and confirms the operation
@@ -232,10 +248,10 @@ namespace VisualGraphs
                     v1_box.Items.Remove(vertice_aux.Label);
                     v2_box.Items.Remove(vertice_aux.Label);
                 }
-                else if (selected_item_name == "Aresta") // TODO
+                else if (selected_item_name == "Aresta")
                 {
-                    //Aresta aresta_aux = Graph.BuscaAresta();
-                    //Graph.RemoveAresta(aresta_aux);
+                    Aresta aresta_aux = Graph.BuscaAresta($"{Graph.BuscaVertice(v1_rem_box.SelectedItem.ToString())._id} {Graph.BuscaVertice(v2_rem_box.SelectedItem.ToString())._id}");
+                    Graph.RemoveAresta(aresta_aux);
                 }
             }
             catch (Exception ex)
@@ -247,18 +263,26 @@ namespace VisualGraphs
             if (selected_item_name != "") myConsole.AddStringToConsole($"\n{selected_item_name} foi removido.");
             Remove_scene.Visibility = Visibility.Collapsed;
             ComboRem_box.SelectedItem = "";
+            v1_rem_box.Visibility = Visibility.Collapsed;
+            v2_rem_box.Visibility = Visibility.Collapsed;
             myConsole.Update();
             graphStats.Update();
         }
 
         #endregion
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)// TODO
         {
-            msgdi = new MessageDialog(Graph.BuscaEmLargura(0));
-            await msgdi.ShowAsync();
-            MatrizAdj matriz = new MatrizAdj(Graph);
-            await log.SaveAsync(matriz.ToString());
+            try
+            {
+                msgdi = new MessageDialog(Graph.BuscaEmLargura(0));
+                await msgdi.ShowAsync();/*
+                MatrizAdj matriz = new MatrizAdj(Graph);
+                await log.SaveAsync(matriz.ToString());*/
+            }catch(Exception ex)
+            {
+                msgdi = new MessageDialog($"Erro {ex.Message}");
+            }
         }
         private void calcular_on_click(object sender, RoutedEventArgs e)
         {
