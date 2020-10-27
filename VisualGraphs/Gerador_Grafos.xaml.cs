@@ -22,7 +22,6 @@ using System.Diagnostics;
 
 namespace VisualGraphs
 {
-    
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
@@ -49,21 +48,6 @@ namespace VisualGraphs
             log = new LogManager();
         }
 
-        /// <summary>
-        /// Shows Add and Rem sections
-        /// </summary>
-        /// <param name="sender">Button</param>
-        /// <param name="e"></param>
-        private void Show_sections(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-
-            if (btn.Name == "Add_btn")
-                Add_scene.Visibility = Visibility.Visible;
-            else
-                Remove_scene.Visibility = Visibility.Visible;
-        }
-               
         #region ADD
         /// <summary>
         /// Clears all controls from add.
@@ -71,7 +55,7 @@ namespace VisualGraphs
         void clear_ui_add()
         {
             isDigraph.Visibility = Visibility.Collapsed;
-            isDigraph.IsChecked = false;
+            isDigraph.IsOn = false;
             label_box.Visibility = Visibility.Collapsed;
             label_box.Text = "";
             lbl_label.Visibility = Visibility.Collapsed;
@@ -90,9 +74,7 @@ namespace VisualGraphs
         /// </summary>
         void GraphSet_add_Control()
         {
-            isDigraph.Visibility = Visibility.Visible;
-            label_box.Visibility = Visibility.Visible;
-            lbl_label.Visibility = Visibility.Visible;
+            Add_Graph.Visibility = Visibility.Visible;
         }
         /// <summary>
         /// Controls ui at vertice add
@@ -128,6 +110,38 @@ namespace VisualGraphs
                 Aresta_add_Control();
         }
 
+        private void Create_Graph(object sender, RoutedEventArgs e)
+        {
+            GraphSet_add_Control();           
+        }
+        private async void Graph_Confirm_Create(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (Graph_exist)
+                {
+                    msgdi = new MessageDialog("Não pode existir mais de um Grafo ainda!");
+                    await msgdi.ShowAsync();
+                    return;
+                }
+                else
+                {
+                    Graph = new Grafo(isDigraph.IsOn);
+                    Graph.name = label_box_graph.Text;
+                    Graph_exist = true; 
+                    GraphCreate.Visibility = Visibility.Collapsed;
+                    myConsole.AddStringToConsole($"\nGrafo {label_box_graph.Text} foi adicionado.");
+                    myConsole.Update();
+                    Add_Graph.Visibility = Visibility.Collapsed;
+                }
+            }
+            catch (Exception ex)
+            {
+                msgdi = new MessageDialog($"Erro: {ex.Message}");
+                await msgdi.ShowAsync();
+            }
+            label_box_graph.Text = "";
+        }
         /// <summary>
         /// Checks Add-combobox and confirms the operation
         /// </summary>
@@ -137,21 +151,6 @@ namespace VisualGraphs
         {
             try
             {
-                if (selected_item_name == "Grafo")
-                {
-                    if(Graph_exist)
-                    {
-                        msgdi = new MessageDialog("Não pode existir mais de um Grafo ainda!");
-                        await msgdi.ShowAsync();
-                        return;
-                    }
-                    else
-                    {
-                        Graph = new Grafo(isDigraph.IsChecked.Value);
-                        Graph.name = label_box.Text;
-                        Graph_exist = true;
-                    }
-                }
                 if (Graph_exist)
                 {
                     switch (selected_item_name)
@@ -170,8 +169,11 @@ namespace VisualGraphs
 
                         case "Aresta":
                             {
-                                Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), Graph.BuscaVertice(v1_box.SelectedItem.ToString()), Graph.BuscaVertice(v2_box.SelectedItem.ToString()), Graph.isDigraph);
-                                Graph.AddAresta(aresta_aux);
+                                if(Graph.Vertices.Count > 0)
+                                {
+                                    Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), Graph.BuscaVertice(v1_box.SelectedItem.ToString()), Graph.BuscaVertice(v2_box.SelectedItem.ToString()), Graph.isDigraph);
+                                    Graph.AddAresta(aresta_aux);
+                                }
                                 break;
                             }
                     }
@@ -238,6 +240,7 @@ namespace VisualGraphs
                     Graph = null; 
                     Graph_exist = false;
                     graphStats.SetGrafo(Graph);
+                    GraphCreate.Visibility = Visibility.Visible;
                 }
                 else if (selected_item_name == "Vértice") //TODO
                 {
@@ -271,19 +274,31 @@ namespace VisualGraphs
 
         #endregion
 
+        #region Utils
+        /// <summary>
+        /// BFS
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Button_Click(object sender, RoutedEventArgs e)// TODO
         {
             try
             {
                 msgdi = new MessageDialog(Graph.BuscaEmLargura(0));
-                await msgdi.ShowAsync();/*
+                /*
                 MatrizAdj matriz = new MatrizAdj(Graph);
                 await log.SaveAsync(matriz.ToString());*/
             }catch(Exception ex)
             {
                 msgdi = new MessageDialog($"Erro {ex.Message}");
             }
+            await msgdi.ShowAsync();
         }
+        /// <summary>
+        /// Calculate Graph functions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void calcular_on_click(object sender, RoutedEventArgs e)
         {
             if(Graph != null)
@@ -291,19 +306,68 @@ namespace VisualGraphs
                 graphStats.SetGrafo(Graph);
                 Debug.WriteLine("Calculos efetuados");
                 myConsole.AddStringToConsole("Calculos efetuados");
-                myConsole.Update();
             }
             else
             {
                 Debug.WriteLine("Erro ao calcular");
                 myConsole.AddStringToConsole("Erro ao calcular componentes");
-                myConsole.Update();
             }
+            myConsole.Update();
+        }
+        /// <summary>
+        /// show saves
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void show_save_log(object sender, RoutedEventArgs e)
+        {
+            Save_Sttgs.Visibility = Visibility.Visible;
+        }
+        /// <summary>
+        /// Shows Add and Rem sections
+        /// </summary>
+        /// <param name="sender">Button</param>
+        /// <param name="e"></param>
+        private void Show_sections(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+
+            if (btn.Name == "Add_btn")
+                Add_scene.Visibility = Visibility.Visible;
+            else
+                Remove_scene.Visibility = Visibility.Visible;
+        }
+        private async void Save_log_event(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var str_btn = btn.Name as string;
+
+            try
+            {
+                switch (str_btn)
+                {
+                    case "Save_Graph":
+                        await log.SaveAsync(Graph.ToString());
+                        break;
+                    case "Save_adjList":
+                        await log.SaveAsync(Graph.AdjListToString());
+                        break;
+                    case "Save_adjMatrix":
+                        await log.SaveAsync(Graph.MatrixListToString());
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                msgdi = new MessageDialog($"Erro {ex.Message}\nGrafo = {Graph}");
+                await msgdi.ShowAsync();
+            }
+            Save_Sttgs.Visibility = Visibility.Collapsed;
         }
 
-        private async void save_log(object sender, RoutedEventArgs e)
-        {
-            await log.SaveAsync(Graph.ToString());
-        }
+        #endregion
+
     }
 }
