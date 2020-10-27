@@ -33,6 +33,7 @@ namespace VisualGraphs.Classes
         public void AddVertice(Vertice v)
         {
             Vertices.Add(v);
+            Adj.Update(this);
         }
         /// <summary>
         /// Removes Vertice from Grafo.
@@ -51,6 +52,7 @@ namespace VisualGraphs.Classes
         public void AddVertice(int id, string lbl)
         {
             Vertices.Add(new Vertice(lbl, id));
+            Adj.Update(this);
         }
         /// <summary>
         /// Adds Aresta into Grafo
@@ -70,6 +72,7 @@ namespace VisualGraphs.Classes
                 Arestas.Add(a);
 
                 if (a.vertice1._id == a.vertice2._id) isAciclic = false; // no longer aciclic
+                Adj.Update(this);
             }
             return false;
         }
@@ -83,6 +86,7 @@ namespace VisualGraphs.Classes
             if (a.isDirected == isDigraph)
             {
                 Arestas.Remove(a);
+                Adj.remove_adj(a);
             }
             return false;
         }
@@ -117,6 +121,30 @@ namespace VisualGraphs.Classes
                 if(v._id == id)
                 {
                     temp = v;
+                    return temp;
+                }
+            }
+            return null;
+        }
+        /// <summary>
+        /// Searches the vertice by conj.
+        /// </summary>
+        /// <param name="conj"></param>
+        /// <returns></returns>
+        public Aresta BuscaAresta(string conj)
+        {
+            Aresta temp;
+
+            string[] str_aux = conj.Split(" ");
+
+            var v1id = int.Parse(str_aux[0]);
+            var v2id = int.Parse(str_aux[1]);
+
+            foreach (var a in Arestas)
+            {
+                if (a.vertice1._id == v1id && a.vertice2._id == v2id)
+                {
+                    temp = a;
                     return temp;
                 }
             }

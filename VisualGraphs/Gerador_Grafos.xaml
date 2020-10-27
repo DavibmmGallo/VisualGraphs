@@ -19,6 +19,8 @@
         <TextBox x:Name="Grafo_stats" HorizontalAlignment="Left" Margin="14,526,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="150" Width="1342" Header="Dados" IsReadOnly="True"/>
         <Button x:Name="Calculate_Button" Content="Calcular" Click="calcular_on_click" Margin="14,681,0,0" VerticalAlignment="Top" Width="141"></Button>
         <Button x:Name="log_btn" Content="Registrar" Click="save_log" Margin="160,681,0,0" VerticalAlignment="Top" Width="132"></Button>
+        <Button Content="BFS" Margin="297,681,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        
         <Grid x:Name="Add_scene" Background="#F4232323" Visibility="Collapsed">
             <Rectangle x:Name="Add_rect" Width="441" Fill="White" Margin="463,128,462,165"/>
             <Button x:Name="Confirm_add_btn" CornerRadius="3" Content="Confirm" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Confirm_add_item" Margin="807,544,0,0" VerticalAlignment="Top"/>
@@ -39,6 +41,7 @@
 
 
         </Grid>
+        
         <Canvas x:Name="Remove_scene" Visibility="Collapsed" Background="#F4232323">
             <Rectangle x:Name="Rem_rect" Width="546" Fill="White" Margin="463,128,462,165" Height="162" Canvas.Top="150" Canvas.Left="10"/>
             <Button x:Name="Confirm_Rem_btn" CornerRadius="3" Content="Confirm" Canvas.Left="127" Canvas.Top="-152" Background="#FF00A9F7" Click="Confirm_rem_item" Margin="807,544,0,0"/>
@@ -49,8 +52,9 @@
                 <x:String></x:String>
             </ComboBox>
             <TextBox x:Name="lbl_rem_box" Canvas.Left="517" Canvas.Top="368" Text="" TextWrapping="Wrap" Width="209" PlaceholderText="Label"/>
+            <ComboBox x:Name="v1_rem_box" Visibility="Collapsed" Canvas.Left="731" Canvas.Top="320" Width="120"/>
+            <ComboBox x:Name="v2_rem_box" Visibility="Collapsed" Canvas.Left="866" Canvas.Top="320" Width="120"/>
 
         </Canvas>
-        <Button Content="BFS" Margin="297,681,0,0" VerticalAlignment="Top" Click="Button_Click"/>
     </Grid>
 </Page>

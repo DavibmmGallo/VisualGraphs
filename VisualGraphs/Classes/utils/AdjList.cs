@@ -21,8 +21,6 @@ namespace VisualGraphs.Classes
         private List<List<int>> Adj;
         private int N { get; set; }
         private int M { get; set; }
-        private FileSavePicker savePicker = new FileSavePicker();
-        private MessageDialog msgdi;
         /// <summary>
         /// Constructor
         /// </summary>
@@ -66,7 +64,6 @@ namespace VisualGraphs.Classes
                 Adj.Add(new List<int>());
             }
 
-
             foreach (var aresta in grafo.Arestas)
             {
                 if (!Adj[aresta.vertice1._id].Contains(aresta.vertice2._id))
@@ -95,6 +92,7 @@ namespace VisualGraphs.Classes
         /// <param name="g"></param>
         public void Clear_adj(Vertice v, Grafo g)
         {
+            //Updates vertices id in g.Arestas;
             foreach(var aresta in g.Arestas.ToList())
             {
                 if (aresta.Contains(v))
@@ -104,7 +102,7 @@ namespace VisualGraphs.Classes
                     if (aresta.vertice2._id > v._id) aresta.vertice2._id--;
                 }
             }
-            
+            //Updates vertices id in adj[];
             foreach(var i in Adj[v._id].ToList())
             {
                 Adj[i].Remove(v._id);
@@ -135,6 +133,20 @@ namespace VisualGraphs.Classes
             }
             return retrn;
         }
-
+        /// <summary>
+        /// Removes an Aresta in adj list
+        /// </summary>
+        /// <param name="a"></param>
+        public void remove_adj(Aresta a)
+        {
+            var v1_id = a.vertice1._id;
+            var v2_id = a.vertice2._id;
+          
+            if(Adj[v1_id].Contains(v2_id))
+                Adj[v1_id].Remove(v2_id);
+            if (Adj[v2_id].Contains(v1_id))
+                Adj[v2_id].Remove(v1_id);
+                       
+        }
     }
 }
