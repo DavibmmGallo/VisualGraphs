@@ -9,6 +9,7 @@ namespace VisualGraphs.Classes
     {
         public List<Vertice> Vertices { get; set; }
         private AdjList Adj { get; set; }
+        private MatrizAdj MatrizAdj { get; set; }
         public List<Aresta> Arestas { get; set; }
         public bool isDigraph;
         protected bool isAciclic;
@@ -285,7 +286,27 @@ namespace VisualGraphs.Classes
             }
             return vertices;
         }
-
+        /// <summary>
+        /// AdjList to string
+        /// </summary>
+        /// <returns></returns>
+        public string AdjListToString()
+        {
+            return Adj.ToString();
+        }
+        /// <summary>
+        /// AdjMatrix to string
+        /// </summary>
+        /// <returns></returns>
+        public string MatrixListToString()
+        {
+            MatrizAdj = new MatrizAdj(this);
+            return MatrizAdj.ToString();
+        }
+        /// <summary>
+        /// Graph to string
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"Arestas: \n{ArestasToString()}" +

@@ -12,7 +12,7 @@ namespace VisualGraphs.Classes
 {
     class LogManager
     {
-        private FileSavePicker savePicker = new FileSavePicker();
+        private FileSavePicker savePicker;
         private MessageDialog msgdi;
 
         public LogManager()
@@ -21,6 +21,7 @@ namespace VisualGraphs.Classes
 
         public async Task SaveAsync(string content)
         {
+            savePicker = new FileSavePicker();
             savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             savePicker.FileTypeChoices.Add("Plain Text", new List<string>() { ".txt" });
             savePicker.SuggestedFileName = "New Document";

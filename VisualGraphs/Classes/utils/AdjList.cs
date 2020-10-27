@@ -119,14 +119,10 @@ namespace VisualGraphs.Classes
             string retrn = "";
             for(int i = 0; i < N; i++)
             {
-                for(int j=0; j < M; j++)
+                retrn += "Vértice " + i.ToString() + ": ";
+                foreach (var j in Adj[i].ToList())
                 {
-                   
-                    if (!Equals(Adj[i][j],null))
-                    {
-                        retrn += Adj[i][j].ToString();
-                    }
-                    
+                    retrn += j.ToString();
                     retrn += " ";
                 }
                 retrn += "\n";
