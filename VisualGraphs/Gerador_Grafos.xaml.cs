@@ -54,7 +54,6 @@ namespace VisualGraphs
         /// </summary>
         void clear_ui_add()
         {
-            isDigraph.Visibility = Visibility.Collapsed;
             isDigraph.IsOn = false;
             label_box.Visibility = Visibility.Collapsed;
             label_box.Text = "";
@@ -354,6 +353,9 @@ namespace VisualGraphs
                         break;
                     case "Save_adjMatrix":
                         await log.SaveAsync(Graph.MatrixListToString());
+                        break;
+                    case "Save_Console":
+                        await log.SaveAsync(myConsole.ToString());
                         break;
                     default:
                         break;

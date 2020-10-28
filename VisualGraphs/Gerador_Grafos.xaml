@@ -64,9 +64,10 @@
 
         <Grid x:Name="Save_Sttgs" Background="#F4232323" Visibility="Collapsed">
             <Rectangle Width="441" Fill="White" Margin="436,220,489,438"/>
-            <Button x:Name="Save_Graph" CornerRadius="3" Content="Save Graph" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Save_log_event" Margin="455,266,0,0" VerticalAlignment="Top" Width="120"/>
-            <Button x:Name="Save_adjList" CornerRadius="3" Content="Save Adj. List" Background="#FF00A9F7" Click="Save_log_event" Margin="597,266,0,0" VerticalAlignment="Top" Width="120"/>
-            <Button x:Name="Save_adjMatrix" CornerRadius="3" Content="Save Adj. Matrix" Background="#FF00A9F7" Click="Save_log_event" Margin="740,266,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Save_Graph" CornerRadius="3" Content="Save Graph" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Save_log_event" Margin="500,277,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Save_adjList" CornerRadius="3" Content="Save Adj. List" Background="#FF00A9F7" Click="Save_log_event" Margin="683,229,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Save_adjMatrix" CornerRadius="3" Content="Save Adj. Matrix" Background="#FF00A9F7" Click="Save_log_event" Margin="683,277,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Save_Console" CornerRadius="3" Content="Save Console" Background="#FF00A9F7" Click="Save_log_event" Margin="500,229,0,0" VerticalAlignment="Top" Width="120"/>
         </Grid>
 
     </Grid>

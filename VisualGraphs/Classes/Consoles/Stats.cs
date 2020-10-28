@@ -23,7 +23,7 @@ namespace VisualGraphs.Classes
             Grafo = g;
             Update();
         }
-
+        //TODO analise de desempenho 
         public override void Update()
         {
             if (Grafo != null)
