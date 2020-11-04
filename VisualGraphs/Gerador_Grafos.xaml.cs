@@ -18,6 +18,8 @@ using System.Collections.ObjectModel;
 using Windows.UI.Popups;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Numerics;
+using Windows.UI.Input;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace VisualGraphs
@@ -34,14 +36,18 @@ namespace VisualGraphs
         private MessageDialog msgdi;
         private Stats graphStats;
         private LogManager log;
+        private Vector2 CurrentPosition { get; set; }
+        private Vector2 CurrentTransform { get; set; }
+        private bool isCaptureOn = false;
 
         public Gerador_Grafos()
         {
             this.InitializeComponent();
             ApplicationView view = ApplicationView.GetForCurrentView();
-
+            Add_scene.RenderTransform = new TranslateTransform();
+            Remove_scene.RenderTransform = new TranslateTransform();
             view.TryEnterFullScreenMode();
-
+                        
             myConsole = new TextConsole(Console_output);
             graphStats = new Stats(Grafo_stats);
             graphStats.Clear();
@@ -57,14 +63,12 @@ namespace VisualGraphs
             isDigraph.IsOn = false;
             label_box.Visibility = Visibility.Collapsed;
             label_box.Text = "";
-            lbl_label.Visibility = Visibility.Collapsed;
             v1_box.Visibility = Visibility.Collapsed;
             v1_box.SelectedItem = "";
             v2_box.Visibility = Visibility.Collapsed;
             v2_box.SelectedItem = "";
             weigth_Aresta_box.Visibility = Visibility.Collapsed;
             weigth_Aresta_box.Text = "";
-            weigth_label.Visibility = Visibility.Collapsed;
             Aresta_seta.Visibility = Visibility.Collapsed;
         }
         
@@ -81,7 +85,6 @@ namespace VisualGraphs
         void Vertice_add_Control()
         {
             label_box.Visibility = Visibility.Visible;
-            lbl_label.Visibility = Visibility.Visible;
         }
         /// <summary>
         /// Controls ui at Aresta add
@@ -89,7 +92,6 @@ namespace VisualGraphs
         void Aresta_add_Control()
         {
             weigth_Aresta_box.Visibility = Visibility.Visible;
-            weigth_label.Visibility = Visibility.Visible;
             v1_box.Visibility = Visibility.Visible;
             v2_box.Visibility = Visibility.Visible;
             Aresta_seta.Visibility = Visibility.Visible;
@@ -177,6 +179,7 @@ namespace VisualGraphs
                             }
                     }
                     if (selected_item_name != "") myConsole.AddStringToConsole($"\n{selected_item_name} {label_box.Text} foi adicionado.");
+                    myConsole.Update();
                 }
                 else
                 {
@@ -187,12 +190,6 @@ namespace VisualGraphs
                 msgdi = new MessageDialog($"Erro {ex.Message}");
                 await msgdi.ShowAsync();
             }
-
-            clear_ui_add();
-            Add_scene.Visibility = Visibility.Collapsed;
-            ComboAdd_box.SelectedItem = "";
-            myConsole.Update();
-            graphStats.Clear();
         }
         #endregion
 
@@ -241,7 +238,7 @@ namespace VisualGraphs
                     graphStats.SetGrafo(Graph);
                     GraphCreate.Visibility = Visibility.Visible;
                 }
-                else if (selected_item_name == "Vértice") //TODO
+                else if (selected_item_name == "Vértice")
                 {
                     Vertice vertice_aux = Graph.BuscaVertice(lbl_rem_box.Text);
 
@@ -263,10 +260,7 @@ namespace VisualGraphs
             }
 
             if (selected_item_name != "") myConsole.AddStringToConsole($"\n{selected_item_name} foi removido.");
-            Remove_scene.Visibility = Visibility.Collapsed;
-            ComboRem_box.SelectedItem = "";
-            v1_rem_box.Visibility = Visibility.Collapsed;
-            v2_rem_box.Visibility = Visibility.Collapsed;
+            
             myConsole.Update();
             graphStats.Update();
         }
@@ -367,6 +361,76 @@ namespace VisualGraphs
                 await msgdi.ShowAsync();
             }
             Save_Sttgs.Visibility = Visibility.Collapsed;
+        }
+        /// <summary>
+        /// Closes add_scene
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void back_main(object sender, RoutedEventArgs e)
+        {
+            clear_ui_add();
+            Add_scene.Visibility = Visibility.Collapsed;
+            ComboAdd_box.SelectedItem = "";
+            graphStats.Clear();
+        }
+        /// <summary>
+        /// Closes rem_scene
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void back_main_rem(object sender, RoutedEventArgs e)
+        {
+            Remove_scene.Visibility = Visibility.Collapsed;
+            ComboRem_box.SelectedItem = "";
+            v1_rem_box.Visibility = Visibility.Collapsed;
+            v2_rem_box.Visibility = Visibility.Collapsed;
+        }
+        /// <summary>
+        /// Moves grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void move_element(object sender, PointerRoutedEventArgs e)
+        {
+            var grid = sender as Grid;
+            Vector2 diff = e.GetCurrentPoint(Parent as UIElement).Position.ToVector2() - CurrentPosition;
+            if (isCaptureOn)
+            {
+                (grid.RenderTransform as TranslateTransform).X = CurrentTransform.X + diff.X;
+                (grid.RenderTransform as TranslateTransform).Y = CurrentTransform.Y + diff.Y;
+            }
+
+        }
+        /// <summary>
+        /// Grid Mouse button down
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mouse_left_button_down(object sender, PointerRoutedEventArgs e)
+        {
+            var grid = sender as Grid;
+            CurrentPosition = e.GetCurrentPoint((UIElement)Parent).Position.ToVector2();
+            isCaptureOn = true;
+            grid.CapturePointer(e.Pointer);
+        }
+        /// <summary>
+        /// Grid Mouse button up
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mouse_left_button_up(object sender, PointerRoutedEventArgs e)
+        {
+            var grid = sender as Grid;
+            if (isCaptureOn)
+            {
+                Vector2 diff = e.GetCurrentPoint(Parent as UIElement).Position.ToVector2() - CurrentPosition;
+                CurrentTransform = CurrentTransform + diff;
+                grid.ReleasePointerCapture(e.Pointer);
+                isCaptureOn = false;
+            }
+            
+       
         }
 
         #endregion
