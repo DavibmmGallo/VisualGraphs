@@ -20,40 +20,38 @@
         <Button x:Name="Calculate_Button" Content="Calcular" Click="calcular_on_click" Margin="14,681,0,0" VerticalAlignment="Top" Width="184" Height="54"></Button>
         <Button x:Name="log_btn" Content="Registrar" Click="show_save_log" Margin="203,681,0,0" VerticalAlignment="Top" Width="178" Height="54"></Button>
         <Button Content="BFS" Margin="617,692,0,0" VerticalAlignment="Top" Click="Button_Click" Width="98"/>
+        <Button x:Name="GraphCreate" Content="Criar novo grafo" Margin="1120,682,10,33" VerticalAlignment="Stretch" Click="Create_Graph" HorizontalAlignment="Stretch" IsEnabled="True"/>
 
-        <Grid x:Name="Add_scene" Background="#F4232323" Visibility="Collapsed">
-            <Rectangle x:Name="Add_rect" Width="441" Fill="White" Margin="463,128,462,165"/>
-            <Button x:Name="Confirm_add_btn" CornerRadius="3" Content="Confirm" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Confirm_add_item" Margin="807,544,0,0" VerticalAlignment="Top"/>
-            <ComboBox x:Name="ComboAdd_box" Canvas.Left="475" Canvas.Top="357" Width="209" Header="Item" PlaceholderText="Add item" Foreground="#FF0F0D0D" Background="#66000000" SelectionChanged="Change_selection" Margin="475,155,0,0">
+        <Grid x:Name="Add_scene" Width="441" Visibility="Collapsed" Background="#FF3A3838" Margin="465,119,0,0" HorizontalAlignment="Left" Height="475" VerticalAlignment="Top" PointerMoved="move_element" PointerPressed="mouse_left_button_down" PointerReleased="mouse_left_button_up">
+            <Button x:Name="Confirm_add_btn" CornerRadius="3" Content="Confirm" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Confirm_add_item" Margin="355,424,10,19" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            <ComboBox x:Name="ComboAdd_box" Canvas.Left="475" Canvas.Top="357" Header="Item" PlaceholderText="Add item" Foreground="White" Background="#FF999999" SelectionChanged="Change_selection" Margin="12,23,220,0" HorizontalAlignment="Stretch" PlaceholderForeground="#FF2C2626">
                 <x:String>Vértice</x:String>
                 <x:String>Aresta</x:String>
                 <x:String></x:String>
             </ComboBox>
-            <TextBox x:Name="label_box" Visibility="Collapsed" HorizontalAlignment="Left" Margin="475,243,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="29" Width="208" PlaceholderText="Label" SelectionHighlightColor="{ThemeResource ButtonForegroundThemeBrush}"/>
-            <TextBlock x:Name="lbl_label" Visibility="Collapsed" HorizontalAlignment="Left" Margin="475,219,0,0" Text="Label" TextWrapping="Wrap" VerticalAlignment="Top" FocusVisualPrimaryBrush="Black" Foreground="Black"/>
-            <ComboBox x:Name="v1_box" Visibility="Collapsed" Margin="475,352,0,0" Width="152" Header="Vertice 1" Foreground="Black"/>
-            <ComboBox x:Name="v2_box" Visibility="Collapsed" Margin="725,352,0,0" Width="152" Foreground="Black" Header="Vertice 2"/>
-            <TextBox x:Name="weigth_Aresta_box" Visibility="Collapsed" HorizontalAlignment="Left" Margin="725,243,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="29" Width="152" PlaceholderText="Weight"/>
-            <TextBlock x:Name="weigth_label" Visibility="Collapsed" HorizontalAlignment="Left" Margin="725,219,0,0" Text="Weight" TextWrapping="Wrap" VerticalAlignment="Top" FocusVisualPrimaryBrush="Black" Foreground="Black"/>
-            <TextBlock x:Name="Aresta_seta" Visibility="Collapsed" Text="->"  HorizontalAlignment="Center" Margin="0,380,0,0" Foreground="Black" TextWrapping="Wrap" VerticalAlignment="Top" Height="19" Width="19"/>
+            <TextBox x:Name="label_box" Visibility="Collapsed" HorizontalAlignment="Left" Margin="12,83,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="54" Width="209" PlaceholderText="Label" SelectionHighlightColor="{ThemeResource ButtonForegroundThemeBrush}" Background="#FF999999" BorderBrush="#FF999999" Header="Label" PlaceholderForeground="#FF2C2626"/>
+            <ComboBox x:Name="v1_box" Visibility="Collapsed" Margin="12,183,277,0" Header="Vertice 1" Foreground="Black" HorizontalAlignment="Stretch" Background="#FF999999"/>
+            <ComboBox x:Name="v2_box" Visibility="Collapsed" Margin="279,183,10,0" Foreground="Black" Header="Vertice 2" HorizontalAlignment="Stretch" Background="#FF999999"/>
+            <TextBox x:Name="weigth_Aresta_box" Visibility="Collapsed" Margin="12,259,277,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="54" PlaceholderText="Weight" Background="#FF999999" Foreground="#FF252323" PlaceholderForeground="#FF2C2626" Header="Weight"/>
+            <TextBlock x:Name="Aresta_seta" Visibility="Collapsed" Text="->"  HorizontalAlignment="Left" Margin="213,211,0,0" Foreground="Black" TextWrapping="Wrap" VerticalAlignment="Top" Height="19" Width="19"/>
+            <Button x:Name="back_add_btn" CornerRadius="3" Content="Back" Background="#FF00A9F7" Click="back_main" Margin="12,424,0,0" VerticalAlignment="Top" Width="76"/>
         </Grid>
 
-        <Canvas x:Name="Remove_scene" Visibility="Collapsed" Background="#F4232323">
-            <Rectangle x:Name="Rem_rect" Width="546" Fill="White" Margin="463,128,462,165" Height="162" Canvas.Top="150" Canvas.Left="10"/>
-            <Button x:Name="Confirm_Rem_btn" CornerRadius="3" Content="Confirm" Canvas.Left="127" Canvas.Top="-152" Background="#FF00A9F7" Click="Confirm_rem_item" Margin="807,544,0,0"/>
-            <ComboBox x:Name="ComboRem_box" Canvas.Left="42" Canvas.Top="142" Width="209" Header="Item" PlaceholderText="Remove item" Foreground="#FF0F0D0D" Background="#66000000"  Margin="475,155,0,0" SelectionChanged="ComboRem_box_SelectionChanged">
+        <Grid x:Name="Remove_scene" Visibility="Collapsed" Background="#FF3A3838" Margin="372,180,666,318" PointerMoved="move_element" PointerPressed="mouse_left_button_down" PointerReleased="mouse_left_button_up">
+            <Button x:Name="Confirm_Rem_btn" CornerRadius="3" Content="Confirm" Canvas.Left="127" Canvas.Top="-152" Background="#FF00A9F7" Click="Confirm_rem_item" Margin="228,215,0,0" VerticalAlignment="Top"/>
+            <ComboBox x:Name="ComboRem_box" Canvas.Left="42" Canvas.Top="142" Width="272" Header="Item" PlaceholderText="Remove item" Foreground="White" Background="#FF999999"  Margin="31,30,0,0" SelectionChanged="ComboRem_box_SelectionChanged">
                 <x:String>Grafo</x:String>
                 <x:String>Vértice</x:String>
                 <x:String>Aresta</x:String>
                 <x:String></x:String>
             </ComboBox>
-            <TextBox x:Name="lbl_rem_box" Canvas.Left="517" Canvas.Top="368" Text="" TextWrapping="Wrap" Width="209" PlaceholderText="Label"/>
-            <ComboBox x:Name="v1_rem_box" Visibility="Collapsed" Canvas.Left="731" Canvas.Top="320" Width="120"/>
-            <ComboBox x:Name="v2_rem_box" Visibility="Collapsed" Canvas.Left="866" Canvas.Top="320" Width="120"/>
+            <TextBox x:Name="lbl_rem_box" Visibility="Collapsed" Canvas.Left="517" Canvas.Top="368" Text="" TextWrapping="Wrap" PlaceholderText="Label" Margin="31,95,0,0" Height="55" VerticalAlignment="Top" HorizontalAlignment="Left" Width="272" Background="#FF999999" Header="Label"/>
+            <ComboBox x:Name="v1_rem_box" Visibility="Collapsed" Canvas.Left="731" Canvas.Top="320" Width="120" Margin="31,163,0,0" Background="#FF999999"/>
+            <ComboBox x:Name="v2_rem_box" Visibility="Collapsed" Canvas.Left="866" Canvas.Top="320" Width="120" Margin="183,163,0,0" Background="#FF999999"/>
+            <Button x:Name="back_Rem_btn" CornerRadius="3" Content="Back" Background="#FF00A9F7" Click="back_main_rem" Margin="31,215,0,0" VerticalAlignment="Top" Width="70"/>
 
-        </Canvas>
+        </Grid>
 
-        <Button x:Name="GraphCreate" Content="Criar novo grafo" Margin="1120,682,10,33" VerticalAlignment="Stretch" Click="Create_Graph" HorizontalAlignment="Stretch" IsEnabled="True"/>
         <Grid x:Name="Add_Graph" Background="#F4232323" Visibility="Collapsed">
             <Rectangle x:Name="Add_rtng" Width="441" Fill="#FF737382" Margin="436,205,489,410"/>
             <Button x:Name="Confirm_add_graph" CornerRadius="3" Content="Confirm" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Graph_Confirm_Create" Margin="780,304,0,0" VerticalAlignment="Top"/>
@@ -64,9 +62,10 @@
 
         <Grid x:Name="Save_Sttgs" Background="#F4232323" Visibility="Collapsed">
             <Rectangle Width="441" Fill="White" Margin="436,220,489,438"/>
-            <Button x:Name="Save_Graph" CornerRadius="3" Content="Save Graph" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Save_log_event" Margin="455,266,0,0" VerticalAlignment="Top" Width="120"/>
-            <Button x:Name="Save_adjList" CornerRadius="3" Content="Save Adj. List" Background="#FF00A9F7" Click="Save_log_event" Margin="597,266,0,0" VerticalAlignment="Top" Width="120"/>
-            <Button x:Name="Save_adjMatrix" CornerRadius="3" Content="Save Adj. Matrix" Background="#FF00A9F7" Click="Save_log_event" Margin="740,266,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Save_Graph" CornerRadius="3" Content="Save Graph" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Save_log_event" Margin="500,277,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Save_adjList" CornerRadius="3" Content="Save Adj. List" Background="#FF00A9F7" Click="Save_log_event" Margin="683,229,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Save_adjMatrix" CornerRadius="3" Content="Save Adj. Matrix" Background="#FF00A9F7" Click="Save_log_event" Margin="683,277,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Save_Console" CornerRadius="3" Content="Save Console" Background="#FF00A9F7" Click="Save_log_event" Margin="500,229,0,0" VerticalAlignment="Top" Width="120"/>
         </Grid>
 
     </Grid>
