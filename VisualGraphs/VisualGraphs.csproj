@@ -119,6 +119,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Drawing\DrawManager.cs" />
+    <Compile Include="Classes\Drawing\ShapeVertice.cs" />
     <Compile Include="Classes\utils\AdjList.cs" />
     <Compile Include="Classes\Aresta.cs" />
     <Compile Include="Classes\Consoles\Console.cs" />

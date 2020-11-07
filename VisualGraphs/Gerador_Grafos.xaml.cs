@@ -36,6 +36,7 @@ namespace VisualGraphs
         private MessageDialog msgdi;
         private Stats graphStats;
         private LogManager log;
+        private DrawManager Drawer;
         private Vector2 CurrentPosition { get; set; }
         private Vector2 CurrentTransform { get; set; }
         private bool isCaptureOn = false;
@@ -48,10 +49,15 @@ namespace VisualGraphs
             Remove_scene.RenderTransform = new TranslateTransform();
             view.TryEnterFullScreenMode();
                         
+            //Backend com calculos
             myConsole = new TextConsole(Console_output);
             graphStats = new Stats(Grafo_stats);
             graphStats.Clear();
             log = new LogManager();
+
+            //Desenhos do Satanas
+            Drawer = new DrawManager(TelaOutput);
+            
         }
 
         #region ADD
@@ -299,6 +305,16 @@ namespace VisualGraphs
                 graphStats.SetGrafo(Graph);
                 Debug.WriteLine("Calculos efetuados");
                 myConsole.AddStringToConsole("Calculos efetuados");
+
+                Random r = new Random();
+                float left = r.Next(20, 70);
+                float top = r.Next(30, 200);
+                foreach (Vertice v in Graph.Vertices)
+                {
+                    Drawer.DrawEllipse(v,left,top);
+                    left += r.Next(30, 200);
+                    top += r.Next(20,70);
+                }
             }
             else
             {
