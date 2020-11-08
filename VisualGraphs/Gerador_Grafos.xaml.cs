@@ -57,7 +57,7 @@ namespace VisualGraphs
 
             //Desenhos do Satanas
             Drawer = new DrawManager(TelaOutput);
-
+            //Drawer.Draw();
         }
 
         #region ADD
@@ -171,6 +171,7 @@ namespace VisualGraphs
                                 v2_box.Items.Add(vertice_aux.Label);
                                 v1_rem_box.Items.Add(vertice_aux.Label);
                                 v2_rem_box.Items.Add(vertice_aux.Label);
+                                Drawer.AddVerticeToShape(vertice_aux);
                                 break;
                             }
 
@@ -283,6 +284,10 @@ namespace VisualGraphs
         {
             try
             {
+                if(Graph == null)
+                {
+                    Debug.WriteLine("Grafo Nao Inicializado");
+                }
                 msgdi = new MessageDialog(Graph.BuscaEmLargura(0));
                 /*
                 MatrizAdj matriz = new MatrizAdj(Graph);
@@ -300,12 +305,13 @@ namespace VisualGraphs
         /// <param name="e"></param>
         private void calcular_on_click(object sender, RoutedEventArgs e)
         {
-            Drawer.ClearCanvas();
+            Drawer.Draw();
             if (Graph != null)
             {
                 graphStats.SetGrafo(Graph);
                 Debug.WriteLine("Calculos efetuados");
                 myConsole.AddStringToConsole("Calculos efetuados");
+
             }
             else
             {
@@ -444,19 +450,7 @@ namespace VisualGraphs
 
         private void TelaOutput_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
         {
-            Canvas layout = sender as Canvas;
-            int wheelDelta = e.GetCurrentPoint(layout).Properties.MouseWheelDelta;
-            Boolean isHorizontalSwipe =
-            e.GetCurrentPoint(layout).Properties.IsHorizontalMouseWheel;
-
-            if (true) 
-    {
-                layout.Translation = new Vector3(layout.Translation.X + wheelDelta, layout.Translation.Y, layout.Translation.Z);
-            }
-    else
-            {
-                layout.Translation = new Vector3(layout.Translation.X, layout.Translation.Y + wheelDelta, layout.Translation.Z);
-            }
+ 
         }
     }
 }
