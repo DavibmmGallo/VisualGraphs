@@ -449,7 +449,17 @@ namespace VisualGraphs
        
         }
 
+        private void cancel_add_graph_Click(object sender, RoutedEventArgs e)
+        {
+            Add_Graph.Visibility = Visibility.Collapsed;
+        }
+
+
         #endregion
 
+        private void Cancel_Save_Graph_Click(object sender, RoutedEventArgs e)
+        {
+            Save_Sttgs.Visibility = Visibility.Collapsed;
+        }
     }
 }

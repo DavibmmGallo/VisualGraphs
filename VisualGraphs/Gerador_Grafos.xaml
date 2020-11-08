@@ -57,15 +57,17 @@
             <Button x:Name="Confirm_add_graph" CornerRadius="3" Content="Confirm" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Graph_Confirm_Create" Margin="780,304,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="label_box_graph" Visibility="Visible" HorizontalAlignment="Left" Margin="475,230,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="225" PlaceholderText="Grafo" SelectionHighlightColor="{ThemeResource ButtonForegroundThemeBrush}"/>
             <TextBlock x:Name="lbl_label_graph" Visibility="Visible" HorizontalAlignment="Left" Margin="475,211,0,0" Text="Grafo" TextWrapping="Wrap" VerticalAlignment="Top" FocusVisualPrimaryBrush="Black" Foreground="Black"/>
-            <ToggleSwitch x:Name="isDigraph" Visibility="Visible" Margin="477,274,754,442" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Canvas.ZIndex="1" Foreground="Black" Background="#FF737382"  IsEnabled="True" Header="Digraph?"/>
+            <ToggleSwitch x:Name="isDigraph" Visibility="Visible" Margin="715,215,516,501" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Canvas.ZIndex="1" Foreground="Black" Background="#FF737382"  IsEnabled="True" Header="Digraph?"/>
+            <Button x:Name="cancel_add_graph" CornerRadius="3" Content="Cancel" Background="#FF00A9F7" Click="cancel_add_graph_Click" Margin="457,304,0,0" VerticalAlignment="Top" Width="68"/>
         </Grid>
 
         <Grid x:Name="Save_Sttgs" Background="#F4232323" Visibility="Collapsed">
-            <Rectangle Width="441" Fill="White" Margin="436,220,489,438"/>
-            <Button x:Name="Save_Graph" CornerRadius="3" Content="Save Graph" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Save_log_event" Margin="500,277,0,0" VerticalAlignment="Top" Width="120"/>
-            <Button x:Name="Save_adjList" CornerRadius="3" Content="Save Adj. List" Background="#FF00A9F7" Click="Save_log_event" Margin="683,229,0,0" VerticalAlignment="Top" Width="120"/>
-            <Button x:Name="Save_adjMatrix" CornerRadius="3" Content="Save Adj. Matrix" Background="#FF00A9F7" Click="Save_log_event" Margin="683,277,0,0" VerticalAlignment="Top" Width="120"/>
-            <Button x:Name="Save_Console" CornerRadius="3" Content="Save Console" Background="#FF00A9F7" Click="Save_log_event" Margin="500,229,0,0" VerticalAlignment="Top" Width="120"/>
+            <Rectangle Width="441" Fill="White" Margin="436,220,489,384"/>
+            <Button x:Name="Save_Graph" CornerRadius="3" Content="Save Graph" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Save_log_event" Margin="455,286,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Save_adjList" CornerRadius="3" Content="Save Adj. List" Background="#FF00A9F7" Click="Save_log_event" Margin="743,229,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Save_adjMatrix" CornerRadius="3" Content="Save Adj. Matrix" Background="#FF00A9F7" Click="Save_log_event" Margin="743,286,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Save_Console" CornerRadius="3" Content="Save Console" Background="#FF00A9F7" Click="Save_log_event" Margin="455,229,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Cancel_Save_Graph" CornerRadius="3" Content="Cancel" Background="#FF00A9F7" Click="Cancel_Save_Graph_Click" Margin="600,340,0,0" VerticalAlignment="Top" Width="113"/>
         </Grid>
 
     </Grid>
