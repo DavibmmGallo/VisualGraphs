@@ -19,7 +19,7 @@
         <TextBox x:Name="Grafo_stats" HorizontalAlignment="Left" Margin="14,526,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="150" Width="1342" Header="Dados" IsReadOnly="True"/>
         <Button x:Name="Calculate_Button" Content="Calcular" Click="calcular_on_click" Margin="14,681,0,0" VerticalAlignment="Top" Width="184" Height="54"></Button>
         <Button x:Name="log_btn" Content="Registrar" Click="show_save_log" Margin="203,681,0,0" VerticalAlignment="Top" Width="178" Height="54"></Button>
-        <Button Content="BFS" Margin="617,692,0,0" VerticalAlignment="Top" Click="Button_Click" Width="98"/>
+        <Button Content="Utilidades" Margin="617,692,0,0" VerticalAlignment="Top" Click="show_util_scene" Width="98"/>
         <Button x:Name="GraphCreate" Content="Criar novo grafo" Margin="1120,682,10,33" VerticalAlignment="Stretch" Click="Create_Graph" HorizontalAlignment="Stretch" IsEnabled="True"/>
 
         <Grid x:Name="Add_scene" Width="441" Visibility="Collapsed" Background="#FF3A3838" Margin="465,119,0,0" HorizontalAlignment="Left" Height="475" VerticalAlignment="Top" PointerMoved="move_element" PointerPressed="mouse_left_button_down" PointerReleased="mouse_left_button_up">
@@ -48,7 +48,7 @@
             <TextBox x:Name="lbl_rem_box" Visibility="Collapsed" Canvas.Left="517" Canvas.Top="368" Text="" TextWrapping="Wrap" PlaceholderText="Label" Margin="31,95,0,0" Height="55" VerticalAlignment="Top" HorizontalAlignment="Left" Width="272" Background="#FF999999" Header="Label"/>
             <ComboBox x:Name="v1_rem_box" Visibility="Collapsed" Canvas.Left="731" Canvas.Top="320" Width="120" Margin="31,163,0,0" Background="#FF999999"/>
             <ComboBox x:Name="v2_rem_box" Visibility="Collapsed" Canvas.Left="866" Canvas.Top="320" Width="120" Margin="183,163,0,0" Background="#FF999999"/>
-            <Button x:Name="back_Rem_btn" CornerRadius="3" Content="Back" Background="#FF00A9F7" Click="back_main_rem" Margin="31,215,0,0" VerticalAlignment="Top" Width="70"/>
+            <Button x:Name="back_Rem_btn" CornerRadius="3" Content="Back" Background="#FF00A9F7" Click="back_main" Margin="31,215,0,0" VerticalAlignment="Top" Width="70"/>
 
         </Grid>
 
@@ -66,6 +66,19 @@
             <Button x:Name="Save_adjList" CornerRadius="3" Content="Save Adj. List" Background="#FF00A9F7" Click="Save_log_event" Margin="683,229,0,0" VerticalAlignment="Top" Width="120"/>
             <Button x:Name="Save_adjMatrix" CornerRadius="3" Content="Save Adj. Matrix" Background="#FF00A9F7" Click="Save_log_event" Margin="683,277,0,0" VerticalAlignment="Top" Width="120"/>
             <Button x:Name="Save_Console" CornerRadius="3" Content="Save Console" Background="#FF00A9F7" Click="Save_log_event" Margin="500,229,0,0" VerticalAlignment="Top" Width="120"/>
+        </Grid>
+
+        <Grid x:Name="Utils_scene" Visibility="Collapsed" Background="#FF3A3838" Margin="480,210,307,343" PointerMoved="move_element" PointerPressed="mouse_left_button_down" PointerReleased="mouse_left_button_up">
+            <ComboBox x:Name="util_cmbx" Margin="0,25,0,0" Width="559" HorizontalAlignment="Center" Background="#FF898585" SelectionChanged="util_cmbx_SelectionChanged">
+                <x:String>Caminho mínimo</x:String>
+                <x:String>Ler arquivo</x:String>
+                <x:String>BFS</x:String>
+                <x:String></x:String>
+            </ComboBox>
+            <TextBox x:Name="from_utils_dkstra" Visibility="Collapsed" HorizontalAlignment="Left" Margin="10,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" PlaceholderText="From label:"/>
+            <TextBox x:Name="to_utils_dkstra" Visibility="Collapsed" HorizontalAlignment="Left" Margin="10,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" PlaceholderText="To label:"/>
+            <Button x:Name="Confirm_util_btn" CornerRadius="3" Content="Confirm" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="confirm_util" Margin="480,175,20,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            <Button x:Name="back_util_btn" CornerRadius="3" Content="Back" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="back_main" Margin="383,175,117,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         </Grid>
 
     </Grid>
