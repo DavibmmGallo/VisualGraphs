@@ -21,12 +21,31 @@ namespace VisualGraphs.Classes
         {
             foreach ( var aresta in grafo.Arestas)
             {
-                if ((aresta.vertice1._id == vx._id && aresta.vertice2._id == vy._id) || (aresta.vertice1._id == vy._id && aresta.vertice2._id == vx._id))
+                if ((aresta.vertice1._id == vx._id && aresta.vertice2._id == vy._id) 
+                    || (aresta.vertice1._id == vy._id && aresta.vertice2._id == vx._id))
                     return true;
             }
             return false;
         }
 
+        public float[,] get_matrix()
+        {
+            float[,] res = new float[grafo.NumVertices(), grafo.NumVertices()];
+            for (int i = 0; i < grafo.NumVertices(); i++)
+            {
+                for(int j=0; j < grafo.NumVertices(); j++)
+                {
+                    if (is_bounded(grafo.BuscaVertice(i), grafo.BuscaVertice(j))) 
+                    {
+                        res[i, j] = grafo.BuscaAresta($"{i} {j}").Peso;
+                    }
+                    else
+                        res[i, j] = 0;
+                }              
+              
+            }
+            return res;
+        }
         public override string ToString()
         {
             string output = "";

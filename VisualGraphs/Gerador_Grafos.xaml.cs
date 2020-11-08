@@ -31,7 +31,7 @@ namespace VisualGraphs
     {
         private string selected_item_name="";
         private Grafo Graph;
-        private bool Graph_exist = false; //temporary!!!
+        private bool Graph_exist = false; 
         private TextConsole myConsole;
         private MessageDialog msgdi;
         private Stats graphStats;
@@ -40,6 +40,7 @@ namespace VisualGraphs
         private Vector2 CurrentPosition { get; set; }
         private Vector2 CurrentTransform { get; set; }
         private bool isCaptureOn = false;
+        private Dictionary<string, Vector2> currentGrid = new Dictionary<string, Vector2>();
 
         public Gerador_Grafos()
         {
@@ -47,6 +48,7 @@ namespace VisualGraphs
             ApplicationView view = ApplicationView.GetForCurrentView();
             Add_scene.RenderTransform = new TranslateTransform();
             Remove_scene.RenderTransform = new TranslateTransform();
+            Utils_scene.RenderTransform = new TranslateTransform();
             view.TryEnterFullScreenMode();
                         
             //Backend com calculos
@@ -276,27 +278,36 @@ namespace VisualGraphs
 
         #region Utils
         /// <summary>
-        /// BFS
+        /// confirms util options
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void Button_Click(object sender, RoutedEventArgs e)// TODO
+        private async void confirm_util(object sender, RoutedEventArgs e)// TODO
         {
             try
             {
-                if(Graph == null)
+                switch (util_cmbx.SelectedItem.ToString())
                 {
-                    Debug.WriteLine("Grafo Nao Inicializado");
+                    case "Caminho mínimo":
+                        msgdi = new MessageDialog(Graph.Dijkstra(Graph.BuscaVertice(from_utils_dkstra.Text)._id,Graph.BuscaVertice(to_utils_dkstra.Text)._id));
+                        await msgdi.ShowAsync(); 
+                        break;
+                    case "Ler arquivo":
+                        break;
+                    case "BFS":
+                        msgdi = new MessageDialog(Graph.BuscaEmLargura(0));
+                        await msgdi.ShowAsync();
+                        break;
+                    default:
+                        break;
                 }
-                msgdi = new MessageDialog(Graph.BuscaEmLargura(0));
-                /*
-                MatrizAdj matriz = new MatrizAdj(Graph);
-                await log.SaveAsync(matriz.ToString());*/
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 msgdi = new MessageDialog($"Erro {ex.Message}");
+                await msgdi.ShowAsync();
             }
-            await msgdi.ShowAsync();
+            
         }
         /// <summary>
         /// Calculate Graph functions
@@ -376,44 +387,63 @@ namespace VisualGraphs
             Save_Sttgs.Visibility = Visibility.Collapsed;
         }
         /// <summary>
-        /// Closes add_scene
+        /// Closes scenes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void back_main(object sender, RoutedEventArgs e)
+        private async void back_main(object sender, RoutedEventArgs e)
         {
-            clear_ui_add();
-            Add_scene.Visibility = Visibility.Collapsed;
-            ComboAdd_box.SelectedItem = "";
-            graphStats.Clear();
-        }
-        /// <summary>
-        /// Closes rem_scene
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void back_main_rem(object sender, RoutedEventArgs e)
-        {
-            Remove_scene.Visibility = Visibility.Collapsed;
-            ComboRem_box.SelectedItem = "";
-            v1_rem_box.Visibility = Visibility.Collapsed;
-            v2_rem_box.Visibility = Visibility.Collapsed;
+            try
+            {
+                var snd = sender as Button;
+                switch (snd.Name)
+                {
+                    case "back_add_btn":
+                        clear_ui_add();
+                        Add_scene.Visibility = Visibility.Collapsed;
+                        ComboAdd_box.SelectedItem = "";
+                        graphStats.Clear();
+                        break;
+                    case "back_Rem_btn":
+                        Remove_scene.Visibility = Visibility.Collapsed;
+                        ComboRem_box.SelectedItem = "";
+                        v1_rem_box.Visibility = Visibility.Collapsed;
+                        v2_rem_box.Visibility = Visibility.Collapsed;
+                        break;
+                    case "back_util_btn":
+                        Utils_scene.Visibility = Visibility.Collapsed;
+                        to_utils_dkstra.Visibility = Visibility.Collapsed;
+                        from_utils_dkstra.Visibility = Visibility.Collapsed;
+                        break;
+
+                }
+            }catch(Exception ex)
+            {
+                msgdi = new MessageDialog($"Erro {ex.Message}");
+                await msgdi.ShowAsync();
+            }
         }
         /// <summary>
         /// Moves grid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void move_element(object sender, PointerRoutedEventArgs e)
+        private async void move_element(object sender, PointerRoutedEventArgs e)
         {
-            var grid = sender as Grid;
-            Vector2 diff = e.GetCurrentPoint(Parent as UIElement).Position.ToVector2() - CurrentPosition;
-            if (isCaptureOn)
+            try
             {
-                (grid.RenderTransform as TranslateTransform).X = CurrentTransform.X + diff.X;
-                (grid.RenderTransform as TranslateTransform).Y = CurrentTransform.Y + diff.Y;
+                var grid = sender as Grid;
+                Vector2 diff = e.GetCurrentPoint(Parent as UIElement).Position.ToVector2() - CurrentPosition;
+                if (isCaptureOn)
+                {
+                    (grid.RenderTransform as TranslateTransform).X = currentGrid[grid.Name].X + diff.X;
+                    (grid.RenderTransform as TranslateTransform).Y = currentGrid[grid.Name].Y + diff.Y;
+                }
+            }catch(Exception ex)
+            {
+                msgdi = new MessageDialog($"Erro {ex.Message}");
+                await msgdi.ShowAsync();
             }
-
         }
         /// <summary>
         /// Grid Mouse button down
@@ -423,6 +453,9 @@ namespace VisualGraphs
         private void mouse_left_button_down(object sender, PointerRoutedEventArgs e)
         {
             var grid = sender as Grid;
+            if(!currentGrid.ContainsKey(grid.Name))
+                currentGrid.Add(grid.Name, CurrentTransform);
+
             CurrentPosition = e.GetCurrentPoint((UIElement)Parent).Position.ToVector2();
             isCaptureOn = true;
             grid.CapturePointer(e.Pointer);
@@ -438,14 +471,49 @@ namespace VisualGraphs
             if (isCaptureOn)
             {
                 Vector2 diff = e.GetCurrentPoint(Parent as UIElement).Position.ToVector2() - CurrentPosition;
-                CurrentTransform = CurrentTransform + diff;
+                currentGrid[grid.Name] = currentGrid[grid.Name] + diff;
                 grid.ReleasePointerCapture(e.Pointer);
                 isCaptureOn = false;
+            }       
+        }
+        /// <summary>
+        /// changes ui from combo box util
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void util_cmbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(util_cmbx.SelectedItem.ToString() == "Caminho mínimo")
+            {
+                to_utils_dkstra.Visibility = Visibility.Visible;
+                from_utils_dkstra.Visibility = Visibility.Visible;
             }
-            
-       
+            else
+            {
+                to_utils_dkstra.Visibility = Visibility.Collapsed;
+                from_utils_dkstra.Visibility = Visibility.Collapsed;
+            }
         }
 
+        private void cancel_add_graph_Click(object sender, RoutedEventArgs e)
+        {
+            Add_Graph.Visibility = Visibility.Collapsed;
+        }
+
+        private void Cancel_Save_Graph_Click(object sender, RoutedEventArgs e)
+        {
+            Save_Sttgs.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// shows utils scene
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void show_util_scene(object sender, RoutedEventArgs e)
+        {
+            Utils_scene.Visibility = Visibility.Visible;
+        }
         #endregion
 
         private void TelaOutput_PointerWheelChanged(object sender, PointerRoutedEventArgs e)

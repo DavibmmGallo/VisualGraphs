@@ -143,7 +143,8 @@ namespace VisualGraphs.Classes
 
             foreach (var a in Arestas)
             {
-                if (a.vertice1._id == v1id && a.vertice2._id == v2id)
+                if ((a.vertice1._id == v1id && a.vertice2._id == v2id)||
+                    (a.vertice1._id == v2id && a.vertice2._id == v1id))
                 {
                     temp = a;
                     return temp;
@@ -253,6 +254,72 @@ namespace VisualGraphs.Classes
                 }
             }
             return count;
+        }
+        public string str_path(int source, int[] prnt)
+        {
+            string res = "";
+
+            if (prnt[source] == -1)
+                return BuscaVertice(source).Label;
+
+            res += str_path(prnt[source],prnt);
+
+            res += " -> " +BuscaVertice(source).Label;
+
+            return res;
+        }
+
+        private int min_dist(int[] dist, bool[] vst)
+        {
+            int min = int.MaxValue, min_index = -1;
+
+            for (int v = 0; v < NumVertices(); v++)
+                if (vst[v] == false && dist[v] <= min)
+                {
+                    min = dist[v];
+                    min_index = v;
+                }
+
+            return min_index;
+        }
+
+        public string Dijkstra(int source, int dest)
+        {
+            MatrizAdj matrix = new MatrizAdj(this);
+            string out_put = "";
+            int[] parent = new int[NumVertices()];
+            int[] dist = new int[NumVertices()];
+            bool[] visitado = new bool[NumVertices()];
+
+            for (int i = 0; i < NumVertices(); i++)
+            {
+                parent[i] = -1;
+                dist[i] = int.MaxValue;
+                visitado[i] = false;
+            }
+            dist[source] = 0;
+
+            for (int count = 0; count < NumVertices() - 1; count++)
+            {
+                int u = min_dist(dist, visitado);
+
+                visitado[u] = true;
+
+                for (int v = 0; v < NumVertices(); v++)
+                    if (!visitado[v] && matrix.get_matrix()[u, v] != 0
+                        && dist[u] != int.MaxValue
+                        && dist[u] + matrix.get_matrix()[u, v] < dist[v]) 
+                    {
+                        dist[v] = dist[u] + (int)matrix.get_matrix()[u,v];
+                        parent[v] = u;
+                    }
+                        
+            }
+            string str = str_path(dest, parent);
+            out_put += $"Caminho mínimo do {BuscaVertice(source)} até {BuscaVertice(dest)} : {dist[dest]}";
+            out_put += "\nCaminho: " + str;
+
+            return out_put;
         }
         #endregion
 
