@@ -11,33 +11,51 @@ using Windows.UI.Xaml.Shapes;
 
 class ShapeVertice
 {
-    private Ellipse shape;
-    private TextBlock Label;
     private Grid MyGrid;
+    private double Size;
+    private bool IsPositioned;
 
     public ShapeVertice(string texto)
     {
-        //setando o texto
-        Label = new TextBlock();
-        Label.Text = texto;
-
-        //definindo a forma;
-        shape = new Ellipse();
-        shape.Fill =  new SolidColorBrush(Colors.DarkBlue);
-        shape.Height = 30;
-        shape.Width = 30;
-
         //definindo o grid
+        IsPositioned = false;
         MyGrid = new Grid();
-        MyGrid.Children.Add(shape);
-        MyGrid.Children.Add(Label);
+        MyGrid.Children.Add(new Ellipse
+        {
+            Fill = new SolidColorBrush(Colors.DarkBlue),
+            Height = 30,
+            Width = 30
+        });
+        Size = 30;
+        MyGrid.Children.Add(new TextBlock
+        {
+            Text = texto,
+            FontSize = 10,
+            Name = "A"
+        }) ;
     }
 
-    public Grid GetVerticeShape(float left, float top)
+    public double GetSize()
     {
-        Canvas.SetLeft(MyGrid, left);
-        Canvas.SetTop(MyGrid, top);
-        return MyGrid;
+        return Size;
+    }
+
+    //retorna o Grid com o shape e o nome em uma grid, na posicao especificada
+    public void SetVerticePosition(double x, double y)
+    {
+        Canvas.SetLeft(MyGrid, x); //x
+        Canvas.SetTop(MyGrid, y); //y
+        IsPositioned = true;
+    }
+
+    //se o Grid ja possui uma posicao definida, retorne-o, senao, retorne nulo
+    public Grid GetGridlock()
+    {
+        if(IsPositioned)
+        {
+            return MyGrid;
+        }
+        return null;
     }
 
 

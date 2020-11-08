@@ -59,7 +59,7 @@ namespace VisualGraphs
 
             //Desenhos do Satanas
             Drawer = new DrawManager(TelaOutput);
-            
+            //Drawer.Draw();
         }
 
         #region ADD
@@ -173,6 +173,7 @@ namespace VisualGraphs
                                 v2_box.Items.Add(vertice_aux.Label);
                                 v1_rem_box.Items.Add(vertice_aux.Label);
                                 v2_rem_box.Items.Add(vertice_aux.Label);
+                                Drawer.AddVerticeToShape(vertice_aux);
                                 break;
                             }
 
@@ -315,21 +316,13 @@ namespace VisualGraphs
         /// <param name="e"></param>
         private void calcular_on_click(object sender, RoutedEventArgs e)
         {
-            if(Graph != null)
+            Drawer.Draw();
+            if (Graph != null)
             {
                 graphStats.SetGrafo(Graph);
                 Debug.WriteLine("Calculos efetuados");
                 myConsole.AddStringToConsole("Calculos efetuados");
 
-                Random r = new Random();
-                float left = r.Next(20, 70);
-                float top = r.Next(30, 200);
-                foreach (Vertice v in Graph.Vertices)
-                {
-                    Drawer.DrawEllipse(v,left,top);
-                    left += r.Next(30, 200);
-                    top += r.Next(20,70);
-                }
             }
             else
             {
@@ -523,5 +516,9 @@ namespace VisualGraphs
         }
         #endregion
 
+        private void TelaOutput_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
+        {
+ 
+        }
     }
 }
