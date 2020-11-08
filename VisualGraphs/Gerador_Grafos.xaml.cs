@@ -57,7 +57,7 @@ namespace VisualGraphs
 
             //Desenhos do Satanas
             Drawer = new DrawManager(TelaOutput);
-            
+
         }
 
         #region ADD
@@ -300,21 +300,12 @@ namespace VisualGraphs
         /// <param name="e"></param>
         private void calcular_on_click(object sender, RoutedEventArgs e)
         {
-            if(Graph != null)
+            Drawer.ClearCanvas();
+            if (Graph != null)
             {
                 graphStats.SetGrafo(Graph);
                 Debug.WriteLine("Calculos efetuados");
                 myConsole.AddStringToConsole("Calculos efetuados");
-
-                Random r = new Random();
-                float left = r.Next(20, 70);
-                float top = r.Next(30, 200);
-                foreach (Vertice v in Graph.Vertices)
-                {
-                    Drawer.DrawEllipse(v,left,top);
-                    left += r.Next(30, 200);
-                    top += r.Next(20,70);
-                }
             }
             else
             {
@@ -451,5 +442,21 @@ namespace VisualGraphs
 
         #endregion
 
+        private void TelaOutput_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
+        {
+            Canvas layout = sender as Canvas;
+            int wheelDelta = e.GetCurrentPoint(layout).Properties.MouseWheelDelta;
+            Boolean isHorizontalSwipe =
+            e.GetCurrentPoint(layout).Properties.IsHorizontalMouseWheel;
+
+            if (true) 
+    {
+                layout.Translation = new Vector3(layout.Translation.X + wheelDelta, layout.Translation.Y, layout.Translation.Z);
+            }
+    else
+            {
+                layout.Translation = new Vector3(layout.Translation.X, layout.Translation.Y + wheelDelta, layout.Translation.Z);
+            }
+        }
     }
 }

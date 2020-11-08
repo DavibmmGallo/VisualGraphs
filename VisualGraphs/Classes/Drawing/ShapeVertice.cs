@@ -11,32 +11,29 @@ using Windows.UI.Xaml.Shapes;
 
 class ShapeVertice
 {
-    private Ellipse shape;
-    private TextBlock Label;
     private Grid MyGrid;
 
     public ShapeVertice(string texto)
     {
-        //setando o texto
-        Label = new TextBlock();
-        Label.Text = texto;
-
-        //definindo a forma;
-        shape = new Ellipse();
-        shape.Fill =  new SolidColorBrush(Colors.DarkBlue);
-        shape.Height = 30;
-        shape.Width = 30;
-
         //definindo o grid
         MyGrid = new Grid();
-        MyGrid.Children.Add(shape);
-        MyGrid.Children.Add(Label);
+        MyGrid.Children.Add(new Ellipse
+        {
+            Fill = new SolidColorBrush(Colors.DarkBlue),
+            Height = 30,
+            Width = 30
+        });
+        MyGrid.Children.Add(new TextBlock
+        {
+            Text = texto
+        });
     }
 
-    public Grid GetVerticeShape(float left, float top)
+    public Grid GetVerticeShape(float left)
     {
-        Canvas.SetLeft(MyGrid, left);
-        Canvas.SetTop(MyGrid, top);
+        float nleft = left + 450;
+        Canvas.SetTop(MyGrid, nleft); //y
+        Canvas.SetLeft(MyGrid, ShapeCircunferencia.CalculaY(left) + 200); //x
         return MyGrid;
     }
 
