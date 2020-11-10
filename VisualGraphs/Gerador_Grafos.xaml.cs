@@ -37,6 +37,7 @@ namespace VisualGraphs
         private Stats graphStats;
         private LogManager log;
         private DrawManager Drawer;
+        private bool IsNotRendered;
         private Vector2 CurrentPosition { get; set; }
         private Vector2 CurrentTransform { get; set; }
         private bool isCaptureOn = false;
@@ -57,6 +58,7 @@ namespace VisualGraphs
             graphStats.Clear();
             log = new LogManager();
 
+            IsNotRendered = false;
             //Desenhos do Satanas
             Drawer = new DrawManager(TelaOutput);
             //Drawer.Draw();
@@ -174,6 +176,7 @@ namespace VisualGraphs
                                 v1_rem_box.Items.Add(vertice_aux.Label);
                                 v2_rem_box.Items.Add(vertice_aux.Label);
                                 Drawer.AddVerticeToShape(vertice_aux);
+                                IsNotRendered = true;
                                 break;
                             }
 
@@ -183,6 +186,7 @@ namespace VisualGraphs
                                 {
                                     Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), Graph.BuscaVertice(v1_box.SelectedItem.ToString()), Graph.BuscaVertice(v2_box.SelectedItem.ToString()), Graph.isDigraph);
                                     Graph.AddAresta(aresta_aux);
+                                    Drawer.AddArestaToShape(aresta_aux);
                                 }
                                 break;
                             }
@@ -316,7 +320,6 @@ namespace VisualGraphs
         /// <param name="e"></param>
         private void calcular_on_click(object sender, RoutedEventArgs e)
         {
-            Drawer.Draw();
             if (Graph != null)
             {
                 graphStats.SetGrafo(Graph);
@@ -514,11 +517,24 @@ namespace VisualGraphs
         {
             Utils_scene.Visibility = Visibility.Visible;
         }
+
+        private void plot_graph(object sender, RoutedEventArgs e)
+        {
+            if(IsNotRendered)
+            {
+                Drawer.Draw();
+                IsNotRendered = false;
+            }else
+            {
+                Drawer.ClearCanvas();
+                IsNotRendered = true;
+            }
+        }
+
+
+
+
         #endregion
 
-        private void TelaOutput_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
-        {
- 
-        }
     }
 }

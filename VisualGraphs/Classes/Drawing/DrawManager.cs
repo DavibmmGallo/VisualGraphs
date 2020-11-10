@@ -15,13 +15,18 @@ class DrawManager
     private Canvas MyCanva;
     private Ellipse Space; // Circulo de representacao
     private double Raio;
+    private Line test;
+    //private bool IsRendered;  //Aplicarei o Design Pattern Memento
+    //private List<Vertice> BackupVertices;
     private List<ShapeVertice> vertices;
+    private List<ShapeAresta> Arestas;
     
         public DrawManager(Canvas c)
         {
         MyCanva = c;
 
         vertices = new List<ShapeVertice>();
+        Arestas = new List<ShapeAresta>();
         //Circunferencia espacial como referencia
         Space = new Ellipse
         {
@@ -37,7 +42,9 @@ class DrawManager
         Debug.WriteLine(225 - Space.Height / 2);
         //raio da circunferencia de referencia
         Raio = Space.Width / 2;
-        MyCanva.Children.Add(Space);
+        //Canvas.SetLeft(test, 475);
+        //Canvas.SetTop(test, 225);
+        //MyCanva.Children.Add(Space);
     }
 
 
@@ -45,10 +52,6 @@ class DrawManager
     //metodo que vai desenhar os shapes dos vertices na tela apos os calculos
     public void Draw()
     {
-        /*
-         *             posx = 475 + Math.Cos(iterator) * Raio;
-                posy = 225 + Math.Sin(iterator) * Raio;
-         * */
         double iterator = GetAngle();
         double space = 0;
         double x, y;
@@ -60,6 +63,17 @@ class DrawManager
             MyCanva.Children.Add(v.GetGridlock());
             space += iterator;
         }
+        //MyCanva.Children.Add(new ShapeAresta(vertices.ElementAt(0), vertices.ElementAt(1)).GetArestaBody());
+        //MyCanva.Children.Add(new ShapeAresta(vertices.ElementAt(0), vertices.ElementAt(2)).GetArestaBody());
+        //MyCanva.Children.Add(new ShapeAresta(vertices.ElementAt(0), vertices.ElementAt(3)).GetArestaBody());
+
+        foreach(ShapeAresta shape in Arestas)
+        {
+            MyCanva.Children.Add(shape.GetArestaBody());
+        }
+
+
+
 
     }
 
@@ -67,9 +81,24 @@ class DrawManager
     //Metodo que adiciona um Shape a um determinado vertice
     public void AddVerticeToShape(Vertice v)
     {
-        vertices.Add(new ShapeVertice(v.Label));
+        
+        vertices.Add(new ShapeVertice(v));
     }
 
+    public void AddArestaToShape(Aresta a)
+    {
+        ShapeAresta are;
+        ShapeVertice v1, v2;
+
+        if(IsShaped(a.vertice1) && IsShaped(a.vertice2))
+        {
+            v1 = GetShape(a.vertice1);
+            v2 = GetShape(a.vertice2);
+
+            are = new ShapeAresta(v1, v2);
+            Arestas.Add(are);
+        }
+    }
 
 
     //metodo que Limpa o Canvas
@@ -89,7 +118,34 @@ class DrawManager
         return 360 / vertices.Count;
     }
 
+    private bool IsShaped(Vertice v)
+    {
+        int incidencia = 0;
+        foreach(ShapeVertice shape in vertices)
+        {
+            if(shape.CheckShapedVertice(v))
+            {
+                incidencia++;
+            }
+        }
+        if(incidencia > 0)
+        {
+            return true;
+        }
+        return false;
+    }
 
+    private ShapeVertice GetShape(Vertice v)
+    {
+        foreach(ShapeVertice shape in vertices)
+        {
+            if (shape.CheckShapedVertice(v))
+            {
+                return shape;
+            }
+        }
+        return null;
+    }
 
 
     #endregion
