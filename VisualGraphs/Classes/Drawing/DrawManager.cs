@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VisualGraphs.Classes;
+using VisualGraphs.Classes.Drawing;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -16,11 +17,13 @@ class DrawManager
     private Ellipse Space; // Circulo de representacao
     private double Raio;
     private List<ShapeVertice> vertices;
+    private List<ShapeAresta> arestas;
     
-        public DrawManager(Canvas c)
-        {
+    public DrawManager(Canvas c)
+    {
         MyCanva = c;
 
+        arestas = new List<ShapeAresta>();
         vertices = new List<ShapeVertice>();
         //Circunferencia espacial como referencia
         Space = new Ellipse
@@ -40,10 +43,14 @@ class DrawManager
         MyCanva.Children.Add(Space);
     }
 
+    public void Clear_Shape()
+    {
+        MyCanva.Children.Clear();
+    }
 
     #region Metodos Publicos
     //metodo que vai desenhar os shapes dos vertices na tela apos os calculos
-    public void Draw()
+    public void DrawVerticesCircular()
     {
         /*
          *             posx = 475 + Math.Cos(iterator) * Raio;
@@ -62,14 +69,34 @@ class DrawManager
         }
 
     }
-
+    public void DrawArestasCircular()
+    {
+        foreach(ShapeAresta a in arestas)
+        {
+            a.SetArestaPosition();
+            MyCanva.Children.Add(a.GetGridlock());
+        }
+    }
+       
 
     //Metodo que adiciona um Shape a um determinado vertice
     public void AddVerticeToShape(Vertice v)
     {
-        vertices.Add(new ShapeVertice(v.Label));
+        vertices.Add(new ShapeVertice(v.Label,v._id));
     }
-
+    public ShapeVertice GetVerticeFromShape(int id)
+    {
+        foreach(ShapeVertice v in vertices)
+        {
+            if (v.Id == id)
+                return v;
+        }
+        return null;
+    }
+    public void AddArestaToShape(Aresta a)
+    {
+        arestas.Add(new ShapeAresta(GetVerticeFromShape(a.vertice1._id), GetVerticeFromShape(a.vertice2._id)));
+    }
 
 
     //metodo que Limpa o Canvas

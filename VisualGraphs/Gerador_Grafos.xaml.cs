@@ -183,6 +183,7 @@ namespace VisualGraphs
                                 {
                                     Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), Graph.BuscaVertice(v1_box.SelectedItem.ToString()), Graph.BuscaVertice(v2_box.SelectedItem.ToString()), Graph.isDigraph);
                                     Graph.AddAresta(aresta_aux);
+                                    Drawer.AddArestaToShape(aresta_aux);
                                 }
                                 break;
                             }
@@ -314,22 +315,32 @@ namespace VisualGraphs
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void calcular_on_click(object sender, RoutedEventArgs e)
+        private async void calcular_on_click(object sender, RoutedEventArgs e)
         {
-            Drawer.Draw();
-            if (Graph != null)
-            {
-                graphStats.SetGrafo(Graph);
-                Debug.WriteLine("Calculos efetuados");
-                myConsole.AddStringToConsole("Calculos efetuados");
+            try
+            {               
+                if (Graph != null)
+                {
+                    Drawer.Clear_Shape();
+                    Drawer.DrawVerticesCircular();
+                    Drawer.DrawArestasCircular();
 
-            }
-            else
+                    graphStats.SetGrafo(Graph);
+                    Debug.WriteLine("Calculos efetuados");
+                    myConsole.AddStringToConsole("Calculos efetuados");
+
+                }
+                else
+                {
+                    Debug.WriteLine("Erro ao calcular");
+                    myConsole.AddStringToConsole("Erro ao calcular componentes");
+                }
+                myConsole.Update();
+            }catch(Exception ex)
             {
-                Debug.WriteLine("Erro ao calcular");
-                myConsole.AddStringToConsole("Erro ao calcular componentes");
+                msgdi = new MessageDialog($"Erro {ex.Message}");
+                await msgdi.ShowAsync();
             }
-            myConsole.Update();
         }
         /// <summary>
         /// show saves
@@ -519,6 +530,14 @@ namespace VisualGraphs
         private void TelaOutput_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
         {
  
+        }
+
+        private void Enter_Down_Input(object sender, KeyRoutedEventArgs e)
+        {
+            if(e.Key == Windows.System.VirtualKey.Enter)
+            {
+                Confirm_add_item(sender, new RoutedEventArgs());
+            }
         }
     }
 }

@@ -255,6 +255,12 @@ namespace VisualGraphs.Classes
             }
             return count;
         }
+        /// <summary>
+        /// returns a string that shows the minimum path between 2 vertex
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="prnt"></param>
+        /// <returns></returns>
         public string str_path(int source, int[] prnt)
         {
             string res = "";
@@ -268,7 +274,12 @@ namespace VisualGraphs.Classes
 
             return res;
         }
-
+        /// <summary>
+        /// Returns the id of which vertex is closer
+        /// </summary>
+        /// <param name="dist"></param>
+        /// <param name="vst"></param>
+        /// <returns></returns>
         private int min_dist(int[] dist, bool[] vst)
         {
             int min = int.MaxValue, min_index = -1;
@@ -282,7 +293,12 @@ namespace VisualGraphs.Classes
 
             return min_index;
         }
-
+        /// <summary>
+        /// Dijkstra algorithim
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="dest"></param>
+        /// <returns></returns>
         public string Dijkstra(int source, int dest)
         {
             MatrizAdj matrix = new MatrizAdj(this);
@@ -380,24 +396,36 @@ namespace VisualGraphs.Classes
                    $"Vertices: \n{VerticesToString()}\n" +
                    $"Numero de Arestas: {NumArestas()}\n" +
                    $"Numero de Vertices: {NumVertices()}\n" +
-                   $"Direcionado: {isDigraph}\t"+
-                   $"Aciclico: {isAciclic}";
+                   $"Direcionado: {isDigraph}\n" +
+                   $"Densidade: {Densidade()}\n"+
+                   $"Grau Médio: {GrauMedio()}";
+                   
         }
-
-        public List<Vertice> Adjacencias(Vertice v)
+        /// <summary>
+        /// Density of a graph
+        /// </summary>
+        /// <returns></returns>
+        public double Densidade()
         {
-            List<Vertice> adj =  new List<Vertice>();
-            if (v == null || !Vertices.Contains(v)) return null;
-            foreach(Aresta a in Arestas)
-            {
-                if(a.Contains(v))
-                {
-                    //adj.Add()
-                }
-            }
-            return null;
-        }
+            int n = NumVertices();
+            int m = NumArestas();
 
+            return 2*(m)/(n*(n-1));
+        }
+        /// <summary>
+        /// GrauMédio 
+        /// </summary>
+        /// <returns></returns>
+        public double GrauMedio()
+        {
+            int n = NumVertices();
+            int sum = 0;
+            for(int i = 0; i < n; i++)
+            {
+                sum += Adj.get_Adj()[i].Count;
+            }
+            return sum / n;
+        }
         #endregion
 
     }
