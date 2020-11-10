@@ -30,7 +30,7 @@
                 <x:String>Aresta</x:String>
                 <x:String></x:String>
             </ComboBox>
-            <TextBox x:Name="label_box" Visibility="Collapsed" HorizontalAlignment="Left" Margin="12,83,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="54" Width="209" PlaceholderText="Label" SelectionHighlightColor="{ThemeResource ButtonForegroundThemeBrush}" Background="#FF999999" BorderBrush="#FF999999" Header="Label" PlaceholderForeground="#FF2C2626"/>
+            <TextBox x:Name="label_box" Visibility="Collapsed" HorizontalAlignment="Left" Margin="12,83,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="54" Width="209" PlaceholderText="Label" SelectionHighlightColor="{ThemeResource ButtonForegroundThemeBrush}" Background="#FF999999" BorderBrush="#FF999999" Header="Label" PlaceholderForeground="#FF2C2626" KeyDown="Enter_Down_Input"/>
             <ComboBox x:Name="v1_box" Visibility="Collapsed" Margin="12,183,277,0" Header="Vertice 1" Foreground="Black" HorizontalAlignment="Stretch" Background="#FF999999"/>
             <ComboBox x:Name="v2_box" Visibility="Collapsed" Margin="279,183,10,0" Foreground="Black" Header="Vertice 2" HorizontalAlignment="Stretch" Background="#FF999999"/>
             <TextBox x:Name="weigth_Aresta_box" Visibility="Collapsed" Margin="12,259,277,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="54" PlaceholderText="Weight" Background="#FF999999" Foreground="#FF252323" PlaceholderForeground="#FF2C2626" Header="Weight"/>

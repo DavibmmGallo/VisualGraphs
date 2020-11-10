@@ -14,12 +14,18 @@ class ShapeVertice
     private Grid MyGrid;
     private double Size;
     private bool IsPositioned;
+    public double X { get; set; }
+    public double Y { get; set; }
+    public string label { get; set; }
+    public int Id { get; set; }
 
-    public ShapeVertice(string texto)
+    public ShapeVertice(string texto, int id)
     {
         //definindo o grid
         IsPositioned = false;
         MyGrid = new Grid();
+        label = texto;
+        Id = id;
         MyGrid.Children.Add(new Ellipse
         {
             Fill = new SolidColorBrush(Colors.DarkBlue),
@@ -29,7 +35,7 @@ class ShapeVertice
         Size = 30;
         MyGrid.Children.Add(new TextBlock
         {
-            Text = texto,
+            Text = label,
             FontSize = 10,
             Name = "A"
         }) ;
