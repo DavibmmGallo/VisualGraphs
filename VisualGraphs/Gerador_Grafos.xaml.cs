@@ -53,7 +53,7 @@ namespace VisualGraphs
             Utils_scene.RenderTransform = new TranslateTransform();
             Grafo_manager.RenderTransform = new TranslateTransform();
             //Fullscreen
-            //view.TryEnterFullScreenMode();
+            view.TryEnterFullScreenMode();
           
             //Backend com calculos
             myConsole = new TextConsole(Console_output);
@@ -255,6 +255,7 @@ namespace VisualGraphs
                     v1_box.Items.Clear();
                     v2_box.Items.Clear();
                     GraphCreate.Visibility = Visibility.Visible;
+                    Drawer.ClearCanvas();
                 }
                 else if (selected_item_name == "Vértice")
                 {
@@ -613,4 +614,3 @@ namespace VisualGraphs
         }
     }
 }
-#endregion
