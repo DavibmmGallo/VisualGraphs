@@ -175,7 +175,7 @@ namespace VisualGraphs
                                 v2_box.Items.Add(vertice_aux.Label);
                                 v1_rem_box.Items.Add(vertice_aux.Label);
                                 v2_rem_box.Items.Add(vertice_aux.Label);
-                                Drawer.AddVerticeToShape(vertice_aux);
+                                //Drawer.AddVerticeToShape(vertice_aux);
                                 IsNotRendered = true;
                                 break;
                             }
@@ -186,7 +186,7 @@ namespace VisualGraphs
                                 {
                                     Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), Graph.BuscaVertice(v1_box.SelectedItem.ToString()), Graph.BuscaVertice(v2_box.SelectedItem.ToString()), Graph.isDigraph);
                                     Graph.AddAresta(aresta_aux);
-                                    Drawer.AddArestaToShape(aresta_aux);
+                                    //Drawer.AddArestaToShape(aresta_aux);
                                 }
                                 break;
                             }
@@ -320,11 +320,13 @@ namespace VisualGraphs
         /// <param name="e"></param>
         private async void calcular_on_click(object sender, RoutedEventArgs e)
         {
-            if (Graph != null)
+            try
             {
-                graphStats.SetGrafo(Graph);
-                Debug.WriteLine("Calculos efetuados");
-                myConsole.AddStringToConsole("Calculos efetuados");
+                if (Graph != null)
+                {
+                    graphStats.SetGrafo(Graph);
+                    Debug.WriteLine("Calculos efetuados");
+                    myConsole.AddStringToConsole("Calculos efetuados");
 
                     graphStats.SetGrafo(Graph);
                     Debug.WriteLine("Calculos efetuados");
@@ -337,7 +339,8 @@ namespace VisualGraphs
                     myConsole.AddStringToConsole("Erro ao calcular componentes");
                 }
                 myConsole.Update();
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 msgdi = new MessageDialog($"Erro {ex.Message}");
                 await msgdi.ShowAsync();
@@ -529,14 +532,10 @@ namespace VisualGraphs
 
         private void plot_graph(object sender, RoutedEventArgs e)
         {
-            if(IsNotRendered)
+            if(Graph != null)
             {
+                Drawer.SetGraphToDraw(Graph);
                 Drawer.Draw();
-                IsNotRendered = false;
-            }else
-            {
-                Drawer.ClearCanvas();
-                IsNotRendered = true;
             }
         }
 
@@ -549,3 +548,4 @@ namespace VisualGraphs
         }
     }
 }
+#endregion

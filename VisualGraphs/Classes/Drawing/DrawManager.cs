@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VisualGraphs.Classes;
-using VisualGraphs.Classes.Drawing;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -16,7 +15,6 @@ class DrawManager
     private Canvas MyCanva;
     private Ellipse Space; // Circulo de representacao
     private double Raio;
-    private Line test;
     //private bool IsRendered;  //Aplicarei o Design Pattern Memento
     //private List<Vertice> BackupVertices;
     private List<ShapeVertice> vertices;
@@ -26,9 +24,8 @@ class DrawManager
     {
         MyCanva = c;
 
-        arestas = new List<ShapeAresta>();
-        vertices = new List<ShapeVertice>();
         Arestas = new List<ShapeAresta>();
+        vertices = new List<ShapeVertice>();
         //Circunferencia espacial como referencia
         Space = new Ellipse
         {
@@ -56,7 +53,19 @@ class DrawManager
 
     #region Metodos Publicos
     //metodo que vai desenhar os shapes dos vertices na tela apos os calculos
-    public void DrawVerticesCircular()
+
+    public void SetGraphToDraw(Grafo G)
+    {
+        foreach(Vertice v in G.Vertices)
+        {
+            AddVerticeToShape(v);
+        }
+        foreach (Aresta a in G.Arestas)
+        {
+            AddArestaToShape(a);
+        }
+    }
+    public void Draw()
     {
         double iterator = GetAngle();
         double space = 0;
@@ -69,28 +78,11 @@ class DrawManager
             MyCanva.Children.Add(v.GetGridlock());
             space += iterator;
         }
-        //MyCanva.Children.Add(new ShapeAresta(vertices.ElementAt(0), vertices.ElementAt(1)).GetArestaBody());
-        //MyCanva.Children.Add(new ShapeAresta(vertices.ElementAt(0), vertices.ElementAt(2)).GetArestaBody());
-        //MyCanva.Children.Add(new ShapeAresta(vertices.ElementAt(0), vertices.ElementAt(3)).GetArestaBody());
-
         foreach(ShapeAresta shape in Arestas)
         {
             MyCanva.Children.Add(shape.GetArestaBody());
         }
-
-
-
-
-    }
-    public void DrawArestasCircular()
-    {
-        foreach(ShapeAresta a in arestas)
-        {
-            a.SetArestaPosition();
-            MyCanva.Children.Add(a.GetGridlock());
-        }
-    }
-       
+    }       
 
     //Metodo que adiciona um Shape a um determinado vertice
     public void AddVerticeToShape(Vertice v)

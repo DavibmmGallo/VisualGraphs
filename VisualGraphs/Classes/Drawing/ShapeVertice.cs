@@ -33,7 +33,7 @@ class ShapeVertice
         Size = 30;
         MyGrid.Children.Add(new TextBlock
         {
-            Text = v.Label,
+            Text =  "   " + v.Label,
             FontSize = 10,
             Name = "A"
         }) ;
