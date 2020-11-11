@@ -37,6 +37,7 @@ namespace VisualGraphs
         private Stats graphStats;
         private LogManager log;
         private DrawManager Drawer;
+        private bool IsNotRendered;
         private Vector2 CurrentPosition { get; set; }
         private Vector2 CurrentTransform { get; set; }
         private bool isCaptureOn = false;
@@ -57,6 +58,7 @@ namespace VisualGraphs
             graphStats.Clear();
             log = new LogManager();
 
+            IsNotRendered = false;
             //Desenhos do Satanas
             Drawer = new DrawManager(TelaOutput);
             //Drawer.Draw();
@@ -173,7 +175,8 @@ namespace VisualGraphs
                                 v2_box.Items.Add(vertice_aux.Label);
                                 v1_rem_box.Items.Add(vertice_aux.Label);
                                 v2_rem_box.Items.Add(vertice_aux.Label);
-                                Drawer.AddVerticeToShape(vertice_aux);
+                                //Drawer.AddVerticeToShape(vertice_aux);
+                                IsNotRendered = true;
                                 break;
                             }
 
@@ -183,7 +186,7 @@ namespace VisualGraphs
                                 {
                                     Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), Graph.BuscaVertice(v1_box.SelectedItem.ToString()), Graph.BuscaVertice(v2_box.SelectedItem.ToString()), Graph.isDigraph);
                                     Graph.AddAresta(aresta_aux);
-                                    Drawer.AddArestaToShape(aresta_aux);
+                                    //Drawer.AddArestaToShape(aresta_aux);
                                 }
                                 break;
                             }
@@ -318,12 +321,12 @@ namespace VisualGraphs
         private async void calcular_on_click(object sender, RoutedEventArgs e)
         {
             try
-            {               
+            {
                 if (Graph != null)
                 {
-                    Drawer.Clear_Shape();
-                    Drawer.DrawVerticesCircular();
-                    Drawer.DrawArestasCircular();
+                    graphStats.SetGrafo(Graph);
+                    Debug.WriteLine("Calculos efetuados");
+                    myConsole.AddStringToConsole("Calculos efetuados");
 
                     graphStats.SetGrafo(Graph);
                     Debug.WriteLine("Calculos efetuados");
@@ -336,7 +339,8 @@ namespace VisualGraphs
                     myConsole.AddStringToConsole("Erro ao calcular componentes");
                 }
                 myConsole.Update();
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 msgdi = new MessageDialog($"Erro {ex.Message}");
                 await msgdi.ShowAsync();
@@ -525,11 +529,14 @@ namespace VisualGraphs
         {
             Utils_scene.Visibility = Visibility.Visible;
         }
-        #endregion
 
-        private void TelaOutput_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
+        private void plot_graph(object sender, RoutedEventArgs e)
         {
- 
+            if(Graph != null)
+            {
+                Drawer.SetGraphToDraw(Graph);
+                Drawer.Draw();
+            }
         }
 
         private void Enter_Down_Input(object sender, KeyRoutedEventArgs e)
@@ -541,3 +548,4 @@ namespace VisualGraphs
         }
     }
 }
+#endregion
