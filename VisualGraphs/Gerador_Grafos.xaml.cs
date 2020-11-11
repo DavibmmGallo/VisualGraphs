@@ -318,7 +318,7 @@ namespace VisualGraphs
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void calcular_on_click(object sender, RoutedEventArgs e)
+        private async void calcular_on_click(object sender, RoutedEventArgs e)
         {
             if (Graph != null)
             {
@@ -326,13 +326,22 @@ namespace VisualGraphs
                 Debug.WriteLine("Calculos efetuados");
                 myConsole.AddStringToConsole("Calculos efetuados");
 
-            }
-            else
+                    graphStats.SetGrafo(Graph);
+                    Debug.WriteLine("Calculos efetuados");
+                    myConsole.AddStringToConsole("Calculos efetuados");
+
+                }
+                else
+                {
+                    Debug.WriteLine("Erro ao calcular");
+                    myConsole.AddStringToConsole("Erro ao calcular componentes");
+                }
+                myConsole.Update();
+            }catch(Exception ex)
             {
-                Debug.WriteLine("Erro ao calcular");
-                myConsole.AddStringToConsole("Erro ao calcular componentes");
+                msgdi = new MessageDialog($"Erro {ex.Message}");
+                await msgdi.ShowAsync();
             }
-            myConsole.Update();
         }
         /// <summary>
         /// show saves
@@ -531,10 +540,12 @@ namespace VisualGraphs
             }
         }
 
-
-
-
-        #endregion
-
+        private void Enter_Down_Input(object sender, KeyRoutedEventArgs e)
+        {
+            if(e.Key == Windows.System.VirtualKey.Enter)
+            {
+                Confirm_add_item(sender, new RoutedEventArgs());
+            }
+        }
     }
 }

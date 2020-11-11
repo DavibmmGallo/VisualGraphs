@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VisualGraphs.Classes;
+using VisualGraphs.Classes.Drawing;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -21,10 +22,11 @@ class DrawManager
     private List<ShapeVertice> vertices;
     private List<ShapeAresta> Arestas;
     
-        public DrawManager(Canvas c)
-        {
+    public DrawManager(Canvas c)
+    {
         MyCanva = c;
 
+        arestas = new List<ShapeAresta>();
         vertices = new List<ShapeVertice>();
         Arestas = new List<ShapeAresta>();
         //Circunferencia espacial como referencia
@@ -47,10 +49,14 @@ class DrawManager
         //MyCanva.Children.Add(Space);
     }
 
+    public void Clear_Shape()
+    {
+        MyCanva.Children.Clear();
+    }
 
     #region Metodos Publicos
     //metodo que vai desenhar os shapes dos vertices na tela apos os calculos
-    public void Draw()
+    public void DrawVerticesCircular()
     {
         double iterator = GetAngle();
         double space = 0;
@@ -76,7 +82,15 @@ class DrawManager
 
 
     }
-
+    public void DrawArestasCircular()
+    {
+        foreach(ShapeAresta a in arestas)
+        {
+            a.SetArestaPosition();
+            MyCanva.Children.Add(a.GetGridlock());
+        }
+    }
+       
 
     //Metodo que adiciona um Shape a um determinado vertice
     public void AddVerticeToShape(Vertice v)

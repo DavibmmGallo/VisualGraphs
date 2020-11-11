@@ -32,7 +32,9 @@ namespace VisualGraphs.Classes
                 Box.Text = " Nome: " + Grafo.name + "\n" +
                            " Componentes: " + NComponents + "\n" +
                            " Numero de Arestas: " + Grafo.NumArestas() + "\n" +
-                           " Numero de Vertices: " + Grafo.NumVertices();
+                           " Numero de Vertices: " + Grafo.NumVertices()+ "\n"+
+                           " Densidade: "+ Grafo.Densidade() + "\n" +
+                           " Grau Médio: "+ Grafo.GrauMedio();
             }
             else
             {
