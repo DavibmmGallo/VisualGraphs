@@ -14,14 +14,15 @@
         <Button x:Name="Add_btn" Content="Add" ToolTipService.ToolTip="Adiciona vertice ou aresta&#xa;no Grafo" Margin="14,99,0,0" VerticalAlignment="Top" Height="53" Width="184" Click="Show_sections" />
         <Button x:Name="Rem_btn" Content="Remove" ToolTipService.ToolTip="Retira vertice ou aresta&#xa;no Grafo"  Margin="203,99,0,0" VerticalAlignment="Top" Height="53" Width="178" Click="Show_sections"/>
         <TextBlock HorizontalAlignment="Left" Margin="455,32,0,0" TextAlignment="Center" Text="Gerador de Grafos" TextWrapping="Wrap" VerticalAlignment="Top" Height="58" Width="442" SelectionHighlightColor="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" FocusVisualPrimaryBrush="{x:Null}" FontFamily="Adobe Gothic Std B" FontSize="36"/>
-        <Canvas Margin="406,99,10,219" Background="White" x:Name="TelaOutput" Width="950" Height="450" PointerWheelChanged="TelaOutput_PointerWheelChanged" />
+        <Canvas Margin="406,99,10,219" Background="White" x:Name="TelaOutput" Width="950" Height="450"/>
         <TextBox x:Name="Console_output" HorizontalAlignment="Left" Margin="14,157,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="364" Width="367" IsReadOnly="True" Header="Console" AllowDrop="True"/>
         <TextBox x:Name="Grafo_stats" HorizontalAlignment="Left" Margin="14,526,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="150" Width="1342" Header="Dados" IsReadOnly="True"/>
         <Button x:Name="Calculate_Button" Content="Calcular" ToolTipService.ToolTip="Calcula e plota o Grafo&#xa;na interface visual" Click="calcular_on_click" Margin="14,681,0,0" VerticalAlignment="Top" Width="184" Height="54"></Button>
         <Button x:Name="log_btn" Content="Registrar" ToolTipService.ToolTip="Leva a interface para criaçao de&#xa;arquivos fisicos" Click="show_save_log" Margin="203,681,0,0" VerticalAlignment="Top" Width="178" Height="54"></Button>
         <Button x:Name="GraphCreate" Content="Criar novo grafo" ToolTipService.ToolTip="Leva a interface para&#xa;criação de novos grafos" Margin="1120,682,10,33" VerticalAlignment="Stretch" Click="Create_Graph" HorizontalAlignment="Stretch" IsEnabled="True"/>
-        <Button Content="Utilidades" Margin="386,681,0,0" VerticalAlignment="Top" Click="show_util_scene" Width="179" Height="54"/>
-
+        <Button Content="Utilidades" Margin="617,692,0,0" VerticalAlignment="Top" Click="show_util_scene" Width="98"/>
+        <Button Content="Plotar" Margin="824,692,0,0" VerticalAlignment="Top" Click="plot_graph" ></Button>
+        
 
         <Grid x:Name="Add_scene" Width="441" Visibility="Collapsed" Background="#FF3A3838" Margin="465,119,0,0" HorizontalAlignment="Left" Height="475" VerticalAlignment="Top" PointerMoved="move_element" PointerPressed="mouse_left_button_down" PointerReleased="mouse_left_button_up">
             <Button x:Name="Confirm_add_btn" CornerRadius="3" Content="Confirm" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="Confirm_add_item" Margin="355,424,10,19" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
