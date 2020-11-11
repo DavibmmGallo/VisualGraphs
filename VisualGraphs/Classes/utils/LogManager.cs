@@ -50,6 +50,6 @@ namespace VisualGraphs.Classes
             }
             await msgdi.ShowAsync();
         }
-
+       // public async Task 
     }
 }

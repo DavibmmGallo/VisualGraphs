@@ -20,7 +20,7 @@
         <Button x:Name="Calculate_Button" Content="Calcular" ToolTipService.ToolTip="Calcula e plota o Grafo&#xa;na interface visual" Click="calcular_on_click" Margin="14,681,0,0" VerticalAlignment="Top" Width="184" Height="54"></Button>
         <Button x:Name="log_btn" Content="Registrar" ToolTipService.ToolTip="Leva a interface para criaçao de&#xa;arquivos fisicos" Click="show_save_log" Margin="203,681,0,0" VerticalAlignment="Top" Width="178" Height="54"></Button>
         <Button x:Name="GraphCreate" Content="Criar novo grafo" ToolTipService.ToolTip="Leva a interface para&#xa;criação de novos grafos" Margin="1120,682,10,33" VerticalAlignment="Stretch" Click="Create_Graph" HorizontalAlignment="Stretch" IsEnabled="True"/>
-        <Button Content="Utilidades" Margin="617,692,0,0" VerticalAlignment="Top" Click="show_util_scene" Width="98"/>
+        <Button Content="Utilidades" Margin="386,681,0,0" VerticalAlignment="Top" Click="show_util_scene" Width="179" Height="54"/>
         <Button Content="Plotar" Margin="824,692,0,0" VerticalAlignment="Top" Click="plot_graph" ></Button>
         
 
@@ -34,7 +34,7 @@
             <TextBox x:Name="label_box" Visibility="Collapsed" HorizontalAlignment="Left" Margin="12,83,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="54" Width="209" PlaceholderText="Label" SelectionHighlightColor="{ThemeResource ButtonForegroundThemeBrush}" Background="#FF999999" BorderBrush="#FF999999" Header="Label" PlaceholderForeground="#FF2C2626" KeyDown="Enter_Down_Input"/>
             <ComboBox x:Name="v1_box" Visibility="Collapsed" Margin="12,183,277,0" Header="Vertice 1" Foreground="Black" HorizontalAlignment="Stretch" Background="#FF999999"/>
             <ComboBox x:Name="v2_box" Visibility="Collapsed" Margin="279,183,10,0" Foreground="Black" Header="Vertice 2" HorizontalAlignment="Stretch" Background="#FF999999"/>
-            <TextBox x:Name="weigth_Aresta_box" Visibility="Collapsed" Margin="12,259,277,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="54" PlaceholderText="Weight" Background="#FF999999" Foreground="#FF252323" PlaceholderForeground="#FF2C2626" Header="Weight"/>
+            <TextBox x:Name="weigth_Aresta_box" Visibility="Collapsed" Margin="12,259,277,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Height="54" PlaceholderText="Weight" Background="#FF999999" Foreground="#FF252323" PlaceholderForeground="#FF2C2626" Header="Weight" KeyDown="Enter_Down_Input"/>
             <TextBlock x:Name="Aresta_seta" Visibility="Collapsed" Text="->"  HorizontalAlignment="Left" Margin="213,211,0,0" Foreground="Black" TextWrapping="Wrap" VerticalAlignment="Top" Height="19" Width="19"/>
             <Button x:Name="back_add_btn" CornerRadius="3" Content="Back" Background="#FF00A9F7" Click="back_main" Margin="12,424,0,0" VerticalAlignment="Top" Width="76"/>
         </Grid>
@@ -75,7 +75,7 @@
         <Grid x:Name="Utils_scene" Visibility="Collapsed" Background="#FF3A3838" Margin="480,210,307,343" PointerMoved="move_element" PointerPressed="mouse_left_button_down" PointerReleased="mouse_left_button_up">
             <ComboBox x:Name="util_cmbx" Margin="0,25,0,0" Width="559" HorizontalAlignment="Center" Background="#FF898585" SelectionChanged="util_cmbx_SelectionChanged">
                 <x:String>Caminho mínimo</x:String>
-                <x:String>Ler arquivo</x:String>
+                <x:String>Gerenciador de Grafo</x:String>
                 <x:String>BFS</x:String>
                 <x:String></x:String>
             </ComboBox>
@@ -84,6 +84,13 @@
             <Button x:Name="Confirm_util_btn" CornerRadius="3" Content="Confirm" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="confirm_util" Margin="480,175,20,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             <Button x:Name="back_util_btn" CornerRadius="3" Content="Back" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="back_main" Margin="383,175,117,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         </Grid>
-
+        <Grid x:Name="Grafo_manager" Visibility="Visible" Background="#FF3A3838" Margin="305,99,456,148" PointerMoved="move_element" PointerPressed="mouse_left_button_down" PointerReleased="mouse_left_button_up">
+            <ListBox x:Name="Vertex_list" ToolTipService.ToolTip="Para deletar um Vértice:&#xa;Selecione e aperte DEL" Margin="10,60,0,105" Background="#FF8F8F8F" HorizontalAlignment="Left" Width="220" KeyDown="DeleteSingle"/>
+            <ListBox x:Name="Aresta_list" ToolTipService.ToolTip="Para deletar uma Aresta:&#xa;Selecione e aperte DEL" Margin="275,60,0,105" Background="#FF8F8F8F" HorizontalAlignment="Left" Width="320" KeyDown="DeleteSingle"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Vértices" TextWrapping="Wrap" VerticalAlignment="Top" Height="46" Width="222" FontSize="22"/>
+            <TextBlock HorizontalAlignment="Left" Margin="275,10,0,0" Text="Arestas" TextWrapping="Wrap" VerticalAlignment="Top" Height="46" Width="222" FontSize="22"/>
+            <Button x:Name="back_task_btn" CornerRadius="3" Content="Back" Canvas.Left="803" Canvas.Top="380" Background="#FF00A9F7" Click="back_main" Margin="10,471,0,10" VerticalAlignment="Stretch" Width="95"/>
+            <TextBox x:Name="VertexLblTask" KeyDown="Enter_Down_Input" ToolTipService.ToolTip="Nome do Vértice + ENTER" HorizontalAlignment="Left" Margin="10,416,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" PlaceholderText="Label"/>
+        </Grid>
     </Grid>
 </Page>

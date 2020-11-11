@@ -98,8 +98,6 @@ namespace VisualGraphs.Classes
                 if (aresta.Contains(v))
                 {
                     g.RemoveAresta(aresta);
-                    if (aresta.vertice1._id > v._id) aresta.vertice1._id--;
-                    if (aresta.vertice2._id > v._id) aresta.vertice2._id--;
                 }
             }
             //Updates vertices id in adj[];
@@ -108,6 +106,12 @@ namespace VisualGraphs.Classes
                 Adj[i].Remove(v._id);
                 foreach (var j in Adj[i].ToList())
                     if (j > v._id) Adj[i][Adj[i].IndexOf(j)]--;
+            }
+            int count = 0;
+            foreach (var i in g.Vertices)
+            {
+                i._id = count;
+                count++;
             }
             Adj.RemoveAt(v._id);
         }
