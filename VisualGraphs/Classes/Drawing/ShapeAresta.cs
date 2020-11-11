@@ -18,26 +18,20 @@ class ShapeAresta
     {
         Point1 = p1;
         Point2 = p2;
-        Body = new Line()
-        {
-            X1 = p1.posX + 10,
-            Y1 = p1.posY + 10,
-            X2 = p2.posX + 10,
-            Y2 = p2.posY + 10,
-            Stroke = new SolidColorBrush(Colors.DarkRed),
-            StrokeThickness = 2
-        };
-
     }
 
 
     public Line GetArestaBody()
     {
-        if(Body != null)
+        return Body = new Line()
         {
-            return Body;
-        }
-        return null;
+            X1 = Point1.posX + 10,
+            Y1 = Point1.posY + 10,
+            X2 = Point2.posX + 10,
+            Y2 = Point2.posY + 10,
+            Stroke = new SolidColorBrush(Colors.DarkRed),
+            StrokeThickness = 2
+        };
     }
 
 
