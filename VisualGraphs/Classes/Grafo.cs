@@ -340,6 +340,26 @@ namespace VisualGraphs.Classes
         #endregion
 
         #region Strings
+        public List<string> VerticeToListString()
+        {
+            List<string> aux = new List<string>();
+            foreach(var v in Vertices)
+            {
+                aux.Add(v.Label);
+            }
+            return aux;
+        }
+        public List<string> ArestaToListString()
+        {
+            List<string> aux = new List<string>();
+            int i = 0;
+            foreach (var a in Arestas)
+            {
+                aux.Add($"[{i}] {a}");
+                i++;
+            }
+            return aux;
+        }
         public string ShowVertices()
         {
             return VerticesToString();

@@ -49,6 +49,8 @@ class ShapeVertice
     //retorna o Grid com o shape e o nome em uma grid, na posicao especificada
     public void SetVerticePosition(double x, double y)
     {
+        X = x;
+        Y = y;
         Canvas.SetLeft(MyGrid, x); //x
         Canvas.SetTop(MyGrid, y); //y
         IsPositioned = true;

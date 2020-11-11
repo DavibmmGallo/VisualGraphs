@@ -73,6 +73,7 @@ class DrawManager
     {
         foreach(ShapeAresta a in arestas)
         {
+            //a.UpdateCod();
             a.SetArestaPosition();
             MyCanva.Children.Add(a.GetGridlock());
         }

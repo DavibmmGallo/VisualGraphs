@@ -46,11 +46,14 @@ namespace VisualGraphs
         {
             this.InitializeComponent();
             ApplicationView view = ApplicationView.GetForCurrentView();
+            //Translate Transform Pop-Ups!
             Add_scene.RenderTransform = new TranslateTransform();
             Remove_scene.RenderTransform = new TranslateTransform();
             Utils_scene.RenderTransform = new TranslateTransform();
-            view.TryEnterFullScreenMode();
-                        
+            Grafo_manager.RenderTransform = new TranslateTransform();
+            //Fullscreen
+            //view.TryEnterFullScreenMode();
+          
             //Backend com calculos
             myConsole = new TextConsole(Console_output);
             graphStats = new Stats(Grafo_stats);
@@ -167,13 +170,16 @@ namespace VisualGraphs
                         case "Vértice":
                             {
                                 Vertice vertice_aux = new Vertice(label_box.Text, Graph.NumVertices());
-
                                 Graph.AddVertice(vertice_aux);
+
                                 v1_box.Items.Add(vertice_aux.Label);
                                 v2_box.Items.Add(vertice_aux.Label);
                                 v1_rem_box.Items.Add(vertice_aux.Label);
                                 v2_rem_box.Items.Add(vertice_aux.Label);
+
                                 Drawer.AddVerticeToShape(vertice_aux);
+                                if (Graph.Vertices.Count > 0) Vertex_list.ItemsSource = Graph.VerticeToListString();
+                                else Vertex_list.ItemsSource = null;
                                 break;
                             }
 
@@ -184,6 +190,7 @@ namespace VisualGraphs
                                     Aresta aresta_aux = new Aresta(float.Parse(weigth_Aresta_box.Text), Graph.BuscaVertice(v1_box.SelectedItem.ToString()), Graph.BuscaVertice(v2_box.SelectedItem.ToString()), Graph.isDigraph);
                                     Graph.AddAresta(aresta_aux);
                                     Drawer.AddArestaToShape(aresta_aux);
+
                                 }
                                 break;
                             }
@@ -246,6 +253,8 @@ namespace VisualGraphs
                     Graph = null; 
                     Graph_exist = false;
                     graphStats.SetGrafo(Graph);
+                    v1_box.Items.Clear();
+                    v2_box.Items.Clear();
                     GraphCreate.Visibility = Visibility.Visible;
                 }
                 else if (selected_item_name == "Vértice")
@@ -298,6 +307,16 @@ namespace VisualGraphs
                     case "BFS":
                         msgdi = new MessageDialog(Graph.BuscaEmLargura(0));
                         await msgdi.ShowAsync();
+                        break;
+                    case "Gerenciador de Grafo":
+                       
+                        Grafo_manager.Visibility = Visibility.Visible;
+                        if (Graph.Vertices.Count>0) Vertex_list.ItemsSource = Graph.VerticeToListString();
+                        else Vertex_list.ItemsSource = null;
+
+                        if (Graph.Arestas.Count > 0) Aresta_list.ItemsSource = Graph.ArestaToListString();
+                        else Aresta_list.ItemsSource = null;
+
                         break;
                     default:
                         break;
@@ -365,6 +384,11 @@ namespace VisualGraphs
             else
                 Remove_scene.Visibility = Visibility.Visible;
         }
+        /// <summary>
+        /// Saves Docs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Save_log_event(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
@@ -425,6 +449,9 @@ namespace VisualGraphs
                         Utils_scene.Visibility = Visibility.Collapsed;
                         to_utils_dkstra.Visibility = Visibility.Collapsed;
                         from_utils_dkstra.Visibility = Visibility.Collapsed;
+                        break;
+                    case "back_task_btn":
+                        Grafo_manager.Visibility = Visibility.Collapsed;
                         break;
 
                 }
@@ -525,18 +552,53 @@ namespace VisualGraphs
         {
             Utils_scene.Visibility = Visibility.Visible;
         }
-        #endregion
-
-        private void TelaOutput_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
-        {
- 
-        }
-
+        /// <summary>
+        /// Enter button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Enter_Down_Input(object sender, KeyRoutedEventArgs e)
         {
             if(e.Key == Windows.System.VirtualKey.Enter)
             {
+                var txt = sender as TextBox;
+                if (txt.Name == "VertexLblTask") { selected_item_name = "Vértice"; label_box.Text = txt.Text; }
                 Confirm_add_item(sender, new RoutedEventArgs());
+            }
+        }
+        #endregion
+
+        private async void DeleteSingle(object sender, KeyRoutedEventArgs e)
+        {
+            var list = sender as ListBox;
+            try
+            {
+                if(e.Key == Windows.System.VirtualKey.Delete)
+                {
+                    if(list.Name == "Vertex_list")
+                    {
+                        Vertice vertice_aux = Graph.BuscaVertice(list.SelectedItem.ToString());
+
+                        Graph.RemoveVertice(vertice_aux);
+
+                        v1_box.Items.Remove(vertice_aux.Label);
+                        v2_box.Items.Remove(vertice_aux.Label);
+                        if (Graph.Vertices.Count > 0) Vertex_list.ItemsSource = Graph.VerticeToListString();
+                        else Vertex_list.ItemsSource = null;
+                    }
+                    else if(list.Name == "Aresta_list")
+                    {
+                        Aresta aresta_aux = Graph.Arestas[int.Parse(list.SelectedItem.ToString().Remove(list.SelectedItem.ToString().IndexOf(']')).Remove(list.SelectedItem.ToString().IndexOf('['), 1))];
+                        Graph.RemoveAresta(aresta_aux);
+                        if (Graph.Arestas.Count > 0) Aresta_list.ItemsSource = Graph.ArestaToListString();
+                        else Aresta_list.ItemsSource = null;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                msgdi = new MessageDialog($"Erro {ex.Message}");
+                await msgdi.ShowAsync();
             }
         }
     }

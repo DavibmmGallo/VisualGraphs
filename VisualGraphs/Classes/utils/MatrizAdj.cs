@@ -16,18 +16,34 @@ namespace VisualGraphs.Classes
 
         private Grafo grafo;
 
-
+        /// <summary>
+        /// Is Bounded (digraph)
+        /// </summary>
+        /// <param name="vx"></param>
+        /// <param name="vy"></param>
+        /// <returns></returns>
         bool is_bounded(Vertice vx, Vertice vy)
         {
             foreach ( var aresta in grafo.Arestas)
             {
-                if ((aresta.vertice1._id == vx._id && aresta.vertice2._id == vy._id) 
+                if (grafo.isDigraph)
+                {
+                    if (aresta.vertice1._id == vx._id && aresta.vertice2._id == vy._id)
+                        return true;
+                }
+                else { 
+                    if ((aresta.vertice1._id == vx._id && aresta.vertice2._id == vy._id) 
                     || (aresta.vertice1._id == vy._id && aresta.vertice2._id == vx._id))
-                    return true;
+                        return true;
+                }
+               
             }
             return false;
         }
-
+        /// <summary>
+        /// Returns Matrix
+        /// </summary>
+        /// <returns></returns>
         public float[,] get_matrix()
         {
             float[,] res = new float[grafo.NumVertices(), grafo.NumVertices()];
@@ -46,6 +62,10 @@ namespace VisualGraphs.Classes
             }
             return res;
         }
+        /// <summary>
+        /// toString()
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             string output = "";
@@ -69,17 +89,12 @@ namespace VisualGraphs.Classes
                     output += grafo.BuscaVertice(i - 1).Label + " ";
                     while (p < grafo.NumVertices())
                     {
-                        output += " ";/*
-                        if (p >= g)
-                        {*/
-                            if (is_bounded(grafo.BuscaVertice(i - 1), grafo.BuscaVertice(p))) 
-                                output += "1";
-                            else
-                                output += "0";
-                        /*}
+                        output += " ";
+                        if (is_bounded(grafo.BuscaVertice(i - 1), grafo.BuscaVertice(p))) 
+                            output += "1";
                         else
-                            output += " ";
-                        */p++;
+                            output += "0";
+                        p++;
                     }
                     g++;
                     p = 0;

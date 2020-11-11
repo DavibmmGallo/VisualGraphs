@@ -38,8 +38,6 @@ namespace VisualGraphs.Classes.Drawing
         //Seta a posição da aresta no canvas
         public void SetArestaPosition()
         {
-            Canvas.SetLeft(MyGrid, X); //x
-            Canvas.SetTop(MyGrid, Y); //y
             IsPositioned = true;
         }
 
